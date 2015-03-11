@@ -4,6 +4,8 @@ clc;
 
 %Retinal images' multiscale segmentation and skeleton%
 
+path(path,'./PreProcessing'); %add path
+
 imgDir = './Dataset/Image/';
 D=dir(fullfile(imgDir,'*.pgm'));
 outDir = './Dataset/Skeleton/'; mkdir(outDir);
