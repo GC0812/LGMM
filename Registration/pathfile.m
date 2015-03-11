@@ -1,7 +1,7 @@
 function [outputfolder1,imagename1,imagename2]=pathfile(i,C)
 
 foldername1=C{1,1}{i};foldername2=C{1,2}{i};
-imagepath1=strcat('./Dataset/skeleton/',foldername1,'/','*.tif');
+imagepath1=strcat('./Dataset/Skeleton/',foldername1,'/','*.tif');
 imagename1=dir(imagepath1);%第一列图像的图片名称
 k1=1;false1=[];
 for m=1:numel(imagename1)
@@ -12,7 +12,7 @@ for m=1:numel(imagename1)
 end
 imagename1(false1)=[];
 
-imagepath2=strcat('./Dataset/skeleton/',foldername2,'/','*.tif');
+imagepath2=strcat('./Dataset/Skeleton/',foldername2,'/','*.tif');
 imagename2=dir(imagepath2);%与第一列相对应的图像的的名称
 k2=1;false2=[];
 for j=1:numel(imagename2)
@@ -23,7 +23,7 @@ for j=1:numel(imagename2)
 end
 imagename2(false2)=[];
 
-outputfolder=strcat('./Results/skeleton/',foldername1,'-',foldername2);
+outputfolder=strcat('./Results/Skeleton/',foldername1,'-',foldername2);
 outputfolder_three=strcat(outputfolder,'/','three');
 mkdir(outputfolder_three);
 outputfolder_four=strcat(outputfolder,'/','four');
