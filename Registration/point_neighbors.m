@@ -2,7 +2,6 @@ function [node] = point_neighbors(bw, pt, R, seed, NeighborNum, labelmap)
 
 % This function search the linked neighbor of the seed
 % Node structure: seed, neighbor numbers, neigh1, link1,neigh2,...
-% Featurevec structure: length1, angs1(1:4), length2,..
 
 if (nargin == 5)
     labelmap = points_show(bw, pt, R, false);
@@ -16,7 +15,6 @@ Len = numel(Neighbor);
 
 % bworigin = bw;
 link = zeros(1, NeighborNum); % neighbor and its link point
-
 
 % assign seed and its border as 0
 labelmap(labelmap==labelmap(seed))= 0; %把labelmap的seed中心位置及周围24个值变为0
@@ -41,6 +39,12 @@ while (sphead <= sptail) && (count< NeighborNum)
                 end
                 labelmap(labelmap==labelmap(idx))= 0;%分叉点的8邻域值都变为0
                 neighidx1 = idx+ Neighbor;
+                tempidx=intersect(stackmap,neighidx1);
+                if ~isempty(tempidx)
+                    for k=1:numel(tempidx)
+                    stackmap(stackmap==tempidx(k))=0;
+                    end
+                end                    
                 for j=1:numel(neighidx1)
                     idx1= neighidx1(j);
                     if (idx1>0) && (idx1<imdim)
