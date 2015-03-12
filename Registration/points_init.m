@@ -1,4 +1,4 @@
-function [ptbifu, ptroot] = points_init(bw)
+function [ptbifu] = points_init(bw)
 
 % This function initializes the feature points from the binary image
 
@@ -24,10 +24,45 @@ for k =1:npix
 end
 
 bw1 = (countmap>=3);
-[labelmap, numlabel] = bwlabel(bw1, 8);
-STATS = regionprops(labelmap,'Centroid'); %求取每个连通区域的中心点的坐标
-bifu = zeros(numel(STATS),2);ptbifu=zeros(numel(STATS),1);
-for i=1:numel(STATS)
-    bifu(i,:) = round(STATS(i,1).Centroid); 
-    ptbifu(i,1) = (bifu(i,1)-1)*M+bifu(i,2);
+[labelmap, numlabel] = bwlabel(bw1, 4);
+STATS1=regionprops(labelmap,'Centroid'); %求取每个连通区域的中心点的坐标
+NUM=regionprops(labelmap,'Area'); %求得每个连通区域的像素数目
+bifu1=zeros(numlabel,2);ptbifu1=zeros(numlabel,1);bifu_num=zeros(numlabel,1);
+for i=1:numlabel
+    bifu1(i,:)=round(STATS1(i,1).Centroid); 
+    ptbifu1(i,1)=(bifu1(i,1)-1)*M+bifu1(i,2);
+    bifu_num(i,1)=NUM(i,1).Area;
+end
+   sequence_no=find(bifu_num>=7);%寻找需要进一步分离的分叉点
+   ptbifu1(sequence_no)=[];
+   
+   m=1;
+   for k=1:numel(sequence_no)
+       sequence(k).number=find(labelmap==sequence_no(k));
+       no=numel(sequence(k).number);
+       if mod(no,2)==1
+           part_sequence1(m).number=sequence(k).number(1:floor(no/2));%将该分叉点分离为两个分叉点
+           part_sequence2(m).number=sequence(k).number(floor(no/2)+2:end);
+           m=m+1;
+       else
+           part_sequence1(m).number=sequence(k).number(1:floor(no/2));
+           part_sequence2(m).number=sequence(k).number(floor(no/2)+1:end);
+           m=m+1;
+       end
+   end
+   n=1;labelmap2=zeros(M,N); %对分离的分叉点标记
+   for j=1:no
+       labelmap2(part_sequence1(j).number)=n;
+       n=n+1;
+       labelmap2(part_sequence2(j).number)=n;
+       n=n+1;
+   end
+   STATS2=regionprops(labelmap2,'Centroid'); %求取分离分叉点连通区域的中心点的坐标
+   bifu2=zeros(2*no,2);ptbifu2=zeros(2*no,1);
+   for i=1:2*no
+       bifu2(i,:)=round(STATS2(i,1).Centroid);
+       ptbifu2(i,1)=(bifu2(i,1)-1)*M+bifu2(i,2);
+   end
+   
+   ptbifu=[ptbifu1;ptbifu2];
 end
