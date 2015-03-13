@@ -26,6 +26,7 @@ count = 0;
 while (sphead <= sptail) && (count< NeighborNum)
     localidx = stackmap(sphead);
     neighidx = localidx + Neighbor; %localidx周围的8个数
+    flag=0;
     for i=1:Len
         idx = neighidx(i);
         if (idx>0) && (idx<imdim) && (bw(idx)==1)
@@ -33,27 +34,26 @@ while (sphead <= sptail) && (count< NeighborNum)
             if find(idx==pt)~=0
                 count = count + 1;
                 link(count)=idx;
+                if flag~=0 
+                stackmap(end-flag+1:end)=0;
+                end
                 
                 if (count>= NeighborNum) 
                     break; 
                 end
                 labelmap(labelmap==labelmap(idx))= 0;%分叉点的8邻域值都变为0
-                neighidx1 = idx+ Neighbor;
-                tempidx=intersect(stackmap,neighidx1);
-                if ~isempty(tempidx)
-                    for k=1:numel(tempidx)
-                    stackmap(stackmap==tempidx(k))=0;
-                    end
-                end                    
+                neighidx1 = idx+ Neighbor;                    
                 for j=1:numel(neighidx1)
                     idx1= neighidx1(j);
                     if (idx1>0) && (idx1<imdim)
                         bw(idx1) = 0;
                     end
                 end
+                break;
             else
                 sptail = sptail + 1;
                 stackmap(sptail)= idx;
+                flag=flag+1;
             end
         end
     end
