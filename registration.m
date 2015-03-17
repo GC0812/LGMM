@@ -74,13 +74,13 @@ for i=1:numel(C{1,1})
     outmosaic_image=(outim1+outim2); 
     imwrite(mat2gray(outmosaic_image),'./Results/optimal_result.tif','Resolution',300);
     
-    if numel(scale_bw1(1))==1
-    bw1_optimal=imread(['./Dataset/Skeleton/',foldername1,'/','0',num2str(scale_bw1(1)),'.tif']);
-    else bw1_optimal=imread(['./Dataset/Skeleton/',foldername1,'/',num2str(scale_bw1(1)),'.tif']);
+    if floor(log10(scale_bw1(1)))+1==1
+    bw1_optimal=imread(['./ske/',foldername1,'/','0',num2str(scale_bw1(1)),'.tif']);
+    else bw1_optimal=imread(['./ske/',foldername1,'/',num2str(scale_bw1(1)),'.tif']);
     end
-    if numel(scale_bw2(1))==1
-    bw2_optimal=imread(['./Dataset/Skeleton/',foldername2,'/','0',num2str(scale_bw2(1)),'.tif']);
-    else bw2_optimal=imread(['./Dataset/Skeleton/',foldername2,'/',num2str(scale_bw2(1)),'.tif']);
+    if floor(log10(scale_bw2(1)))+1==1
+    bw2_optimal=imread(['./ske/',foldername2,'/','0',num2str(scale_bw2(1)),'.tif']);
+    else bw2_optimal=imread(['./ske/',foldername2,'/',num2str(scale_bw2(1)),'.tif']);
     end
     outbw2=imtransform(bw2_optimal, mytform_optimal, 'XData', [1 size(bw1,2)], 'YData', [1 size(bw1,1)]);
     outmosaic_ske=1-cat(3,bw1_optimal,outbw2,outbw2);
