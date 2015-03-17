@@ -1,6 +1,5 @@
-function [ real_points ] = verifystucture( linktable1,loop_points,path_points )
-%VERIFYSTUCTURE Summary of this function goes here
-%   Detailed explanation goes here
+function [ real_points ] = verifystructure( linktable1,loop_points,path_points )
+
 points=[loop_points path_points];
 points=points';
 n=1;
