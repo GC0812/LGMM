@@ -19,14 +19,10 @@ if isempty(linktable)
     return
 end
 
-ptbifu=unique(linktable(1,:),'legacy');
-label = points_show(bw1,ptbifu,3);  %标记分叉点
-label_bifu = 1-cat(3, bw1, bw1+label , bw1);
-figure,imshow(label_bifu)   
-
-label = points_show(bw1,setdiff(linktable(:,1),0),3);  %标记分叉点
-label_bifu = 1-cat(3, bw1, bw1+label , bw1);
-figure,imshow(label_bifu)
+% ptbifu=unique(linktable(1,:),'legacy');
+% label = points_show(bw1,ptbifu,3);  %标记分叉点
+% label_bifu = 1-cat(3, bw1, bw1+label , bw1);
+% figure,imshow(label_bifu)   
 
 [~,N] = size(linktable);
 
@@ -48,8 +44,8 @@ for i=1:N %从linktable第一列开始一直到最后一列
     empty=1;
     if(linktable(1,i)~=0)
         net_num=1;
-        row_array = linktable(:,i); %先研究第一列的行数矩阵pos
-        loop_points = find_position(linktable,row_array);
+        column_array = linktable(:,i); %先研究第一列的行数矩阵pos
+        loop_points = find_position(linktable,column_array);
         if(numel(loop_points)<3) %如果重复次数的个数小于3的话，则不能组成环
             linktable2(:,i)=0;
             linktable=linktable2;
