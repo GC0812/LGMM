@@ -1,44 +1,42 @@
-function [ loop_points ] = find_position( linktable,row_array )
-%FIND_POSITION Summary of this function goes here
-%   Detailed explanation goes here
+function [ loop_points ] = find_position( linktable,column_array )
 
 [M,~] = size(linktable);
 num=1;pos=zeros(5,5);
-for j=1:5 %分别找linktable中每一行中的数的重复次数,每一行形成一个矩阵,记录重复次数
-    if(row_array(j)~=0)        
-        ringpoints = find(linktable==row_array(j));  
+for j=1:5 %分别找linktable中每一列中的数的重复次数,每一列形成一个矩阵,记录重复次数
+    if(column_array(j)~=0)
+        ringpoints = find(linktable==column_array(j));
         ringpoints = ringpoints';
         points_num=numel(ringpoints);
-                
+        
         for count=1:points_num
             line(count) = mod(ringpoints(count), M); %找分叉点的行数
             if (line(count)==0) line(count)=M; end
-            row(count) = 1 + (ringpoints(count) - line(count))/M; %分叉点的列数
+            column(count) = 1 + (ringpoints(count) - line(count))/M; %分叉点的列数
         end
-        row1=row;
+        column1=column;
         line=[];
-        row=[];
-    
-        switch numel(row1)
+        column=[];
+        
+        switch numel(column1)
             case 0
                 pos(num,:)=zeros(1,5);
             case 1
-                pos(num,:)=[row1 0 0 0 0];
+                pos(num,:)=[column1 0 0 0 0];
             case 2
-                pos(num,:)=[row1 0 0 0];
+                pos(num,:)=[column1 0 0 0];
             case 3
-                pos(num,:)=[row1 0 0];
+                pos(num,:)=[column1 0 0];
             case 4
-                pos(num,:)=[row1 0];
+                pos(num,:)=[column1 0];
             case 5
-                pos(num,:)=row1;
+                pos(num,:)=column1;
             case 6
-                pos(num,:)=row1(2:6);
+                pos(num,:)=column1(2:6);
             case 7
-                pos(num,:)=row1(2:6);
+                pos(num,:)=column1(2:6);
         end
         num = num+1;
-   else
+    else
         pos(num,:) = zeros(1,5);
         num = num+1;
     end
