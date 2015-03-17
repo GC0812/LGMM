@@ -56,7 +56,6 @@ for i=1:numel(externalorder)
         order3(n)=externalorder(i);n=n+1;%有对应的外接分叉点的序号
     end
 end
-%order3=setdiff(order3,6);
 allorder=setdiff(bb,order3);
 vesselorder=setdiff(allorder,bb1(externalbifu1(1,:)==0));
 
@@ -93,7 +92,6 @@ if order3~=0
     k=k+1;
 end
 
-%vesselorder=setdiff(vesselorder,5);
 %血管求末梢处（包括分叉点）、1/2处的特征点（包含均有分叉点但不对应；只有一个有分叉点；两个均没分叉点的情况）
 invalidnum=[];
 if vesselorder~=0
@@ -135,8 +133,6 @@ if vesselorder~=0
     end
     pointsc1=[coordmidpointsb1;coordvesselendingb1];
     pointsc2=[coordmidpointsb2;coordvesselendingb2];
-    %pointsc1(:,3)=[];pointsc2(:,3)=[]; pointsc1(:,6)=[];pointsc2(:,6)=[];
-    %pointsc1(4,:)=[];pointsc2(4,:)=[];
     points_a(k).img=pointsc1';points_b(k).img=pointsc2';
     k=k+1;
 end
@@ -152,6 +148,4 @@ for i=2:k-1
     wb1=wb1+numel(points_b(i).img(1,:));
 end
 points_aa=points_aa';points_bb=points_bb';
-% points_aa=[pointsa1;pointsb1;pointsc1];
-% points_bb=[pointsa2;pointsb2;pointsc2];
-%points_aa=pointsa1';points_bb=pointsa2';
+
