@@ -1,6 +1,4 @@
 function [ net_points] = find_net( linktable,linktable1,row_array )
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
 
 loop_points = find_position(linktable,row_array);
 linktable_points=linktable1(1,loop_points);  
