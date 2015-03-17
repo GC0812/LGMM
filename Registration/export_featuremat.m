@@ -3,8 +3,8 @@ function [ featuremat3,featuremat4,featuremat5,loop3,loop4,loop5,linktableorigin
 featuremat3=[];featuremat4=[];featuremat5=[];loop3=[];loop4=[];loop5=[];linktableoriginal=[];
 bw1=bw;
 
-[ptbifu] = points_init(bw1); %找分叉点
-
+[ptbifu] = points_init1(bw1); %找分叉点
+bw1(ptbifu)=1;
 radius=3;
 
 % label = points_show(bw1,ptbifu,3);  %标记分叉点
@@ -19,10 +19,14 @@ if isempty(linktable)
     return
 end
 
-% ptbifu=unique(linktable(1,:),'legacy');
-% label = points_show(bw1,ptbifu,3);  %标记分叉点
-% label_bifu = 1-cat(3, bw1, bw1+label , bw1);
-% figure,imshow(label_bifu)   
+ptbifu=unique(linktable(1,:),'legacy');
+label = points_show(bw1,ptbifu,3);  %标记分叉点
+label_bifu = 1-cat(3, bw1, bw1+label , bw1);
+figure,imshow(label_bifu)   
+
+label = points_show(bw1,setdiff(linktable(:,1),0),3);  %标记分叉点
+label_bifu = 1-cat(3, bw1, bw1+label , bw1);
+figure,imshow(label_bifu)
 
 [~,N] = size(linktable);
 
