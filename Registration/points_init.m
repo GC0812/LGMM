@@ -33,13 +33,13 @@ for i=1:numlabel
     ptbifu1(i,1)=(bifu1(i,1)-1)*M+bifu1(i,2);
     bifu_num(i,1)=NUM(i,1).Area;
 end
-   sequence_no=find(bifu_num>=7);%寻找需要进一步分离的分叉点
+   sequence_no=find(bifu_num>=6); %寻找需要进一步分离的分叉点
       
-   m=1;l=1;
+   m=1;l=1;reserve_no=[];
    for k=1:numel(sequence_no)
        sequence(k).number=find(labelmap==sequence_no(k));
        no=numel(sequence(k).number);
-       if ~isempty(find(countmap(sequence(k).number)>=5, 1))&& no<=9%去除多个点聚集在一起的情况，只在多个点中选择一个作为分叉点
+       if ~isempty(find(countmap(sequence(k).number)>=5, 1))||(numel(find(countmap(sequence(k).number)==4))>=3 && NUM(sequence_no(k),1).Area==6)%去除多个点聚集在一起的情况,只在多个点中选择一个作为分叉点 
           reserve_no(l)=k;
           l=l+1;
        else
@@ -59,9 +59,8 @@ end
    n=1;labelmap2=zeros(M,N); %对分离的分叉点标记
    for j=1:m-1
        labelmap2(part_sequence1(j).number)=n;
-       n=n+1;
-       labelmap2(part_sequence2(j).number)=n;
-       n=n+1;
+       labelmap2(part_sequence2(j).number)=n+1;
+       n=n+2;
    end
    STATS2=regionprops(labelmap2,'Centroid'); %求取分离分叉点连通区域的中心点的坐标
    bifu2=zeros(2*(m-1),2);ptbifu2=zeros(2*(m-1),1);
