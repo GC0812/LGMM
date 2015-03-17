@@ -54,8 +54,7 @@ for i=1:numel(C{1,1})
         scale_bw1(n)=scale_no1(1);scale_bw2(n)=scale_no2(1);
         cycle_type(n)=cycle_type_no(1);
     end
-    outputfolder=strcat('./Results/Skeleton/');
-    fid=fopen([outputfolder,'minerror.txt'],'a+');
+    fid=fopen(['./skeresult','/','minerror.txt'],'a+');
     fprintf(fid,'%s%s%s %.5f %d%s%d %s\t%.5f %d%s%d %s\t%.5f %d%s%d %s\n',...
     foldername1,'-',foldername2,minerror_three(1),scale_bw1(1),'-',scale_bw2(1),...
     type(cycle_type(1)).no,minerror_three(2),scale_bw1(2),'-',scale_bw2(2),type(cycle_type(2)).no,...
