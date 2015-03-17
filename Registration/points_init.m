@@ -24,7 +24,7 @@ for k =1:npix
 end
 
 bw1 = (countmap>=3);
-[labelmap, numlabel] = bwlabel(bw1, 4);
+[labelmap, numlabel] = bwlabel(bw1, 8);
 STATS1=regionprops(labelmap,'Centroid'); %求取每个连通区域的中心点的坐标
 NUM=regionprops(labelmap,'Area'); %求得每个连通区域的像素数目
 bifu1=zeros(numlabel,2);ptbifu1=zeros(numlabel,1);bifu_num=zeros(numlabel,1);
@@ -39,7 +39,7 @@ end
    for k=1:numel(sequence_no)
        sequence(k).number=find(labelmap==sequence_no(k));
        no=numel(sequence(k).number);
-       if ~isempty(find(countmap(sequence(k).number)>=5, 1))%去除多个点聚集在一起的情况，只在多个点种选择一个作为分叉点
+       if ~isempty(find(countmap(sequence(k).number)>=5, 1))&& no<=9%去除多个点聚集在一起的情况，只在多个点中选择一个作为分叉点
           reserve_no(l)=k;
           l=l+1;
        else
