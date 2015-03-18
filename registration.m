@@ -72,7 +72,7 @@ for i=1:numel(C{1,1})
     mytform_optimal=mytform(1,cycle_type(1)).data;
     outim2=imtransform(readfile2, mytform_optimal, 'XData', [1 size(outim1,2)], 'YData', [1 size(outim1,1)]);
     outmosaic_image=(outim1+outim2); 
-    imwrite(mat2gray(outmosaic_image),'./Results/optimal_result.tif','Resolution',300);
+    imwrite(mat2gray(outmosaic_image),'./Results/',foldername1,'-',foldername2,'/','optimal_result.tif','Resolution',300);
     
     if floor(log10(scale_bw1(1)))+1==1
     bw1_optimal=imread(['./ske/',foldername1,'/','0',num2str(scale_bw1(1)),'.tif']);
@@ -84,5 +84,5 @@ for i=1:numel(C{1,1})
     end
     outbw2=imtransform(bw2_optimal, mytform_optimal, 'XData', [1 size(bw1,2)], 'YData', [1 size(bw1,1)]);
     outmosaic_ske=1-cat(3,bw1_optimal,outbw2,outbw2);
-    imwrite(outmosaic_ske,'./Results/optimal_result_ske.tif','Resolution',300);
+    imwrite(outmosaic_ske,['./Results/',foldername1,'-',foldername2,'/','optimal_result_ske.tif','Resolution',300);
 end
