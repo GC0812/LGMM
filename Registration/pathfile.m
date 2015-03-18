@@ -24,6 +24,7 @@ end
 imagename2(false2)=[];
 
 outputfolder=strcat('./Results/Skeleton/',foldername1,'-',foldername2);
+mkdir(outputfolder);
 outputfolder_three=strcat(outputfolder,'/','three');
 mkdir(outputfolder_three);
 outputfolder_four=strcat(outputfolder,'/','four');

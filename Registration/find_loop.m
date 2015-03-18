@@ -8,7 +8,7 @@ for t=1:2
         return
     end    
     if(numel(path_points)~=1)
-        real_points = verifystucture( linktable1,loop_points,path_points );
+        real_points = verifystructure( linktable1,loop_points,path_points );
         if(numel(real_points(real_points~=link_points(1,1)))~=1)  %%%这个地方多斟酌一下，缺乏思考
             return 
         else
