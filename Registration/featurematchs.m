@@ -1,10 +1,6 @@
-function [P1, P2,error_mat] = featurematchs(featuremat1, featuremat2, NumMin,NeighborNum)
+function [P1, P2,error_mat] = featurematchs(featuremat1,featuremat2,NeighborNum)
 
-% This function matches the best point in the feature matrix
-
-% if (nargin == 3)
-%    NeighborNum = 3; 
-% end
+%寻找最佳匹配对
 
 M1 = size(featuremat1, 1);
 M2 = size(featuremat2, 1);
@@ -24,15 +20,11 @@ for i=1:M1
     end
 end
 
-% errmat(i,j) (M1 X M2) <==>(j-1)*M1 + i
-
 [errmat, idx]= sort(errmat(:)); %把errmat元素从小到大排列，返回数值和位置
 error_mat=errmat(1);
-%seeds = idx(1:NumMin); %取前20个位置
 seeds=idx;
 P1 = mod(seeds, M1); %这20个数的行数
 P1(P1==0)= M1; 
 P2 = 1+(seeds-P1)/M1; %这20个数的列数
-% idxmat = idxmat(:);
-% P2idx = idxmat(idx(1:numel(seeds))); %这20个数的行号(2代表右移5位)
+
 
