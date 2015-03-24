@@ -12,9 +12,8 @@ for i=1:M1
     for j=1:M2
         vec2 = featuremat2(j,:); %取featuremat2的某一行
         for k=1:NeighborNum
-            vec2 = circshift(vec2, [0, (k-1)*(NeighborNum+2)]); %vec2中的元素循环移位，右移5位，十位
+            vec2 = circshift(vec2, [0, (k-1)*(NeighborNum+2)]); %vec2中的元素循环移位，实际每次交换一个分叉点的位置使整体进行比对
             tmperr(k)= mean(abs(vec2-vec1)); %求两个特征相减的均值
-            %tmperr(k)=sqrt(sum((vec2-vec1).^2));
         end
         [errmat(i,j), idxmat(i,j)]= min(tmperr); %返回均值的最小值及行号
     end
