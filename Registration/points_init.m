@@ -35,18 +35,36 @@ end
    for k=1:numel(sequence_no)
        sequence(k).number=find(labelmap==sequence_no(k));%得到满足条件的区域序号
        no=numel(sequence(k).number);
-       if ~isempty(find(countmap(sequence(k).number)>=5, 1))||(numel(find(countmap(sequence(k).number)==4))>=3 && NUM(sequence_no(k),1).Area==6)%多个点聚集在一起的情况,只选择一个作为分叉点；处理一种特殊情况 
-          reserve_no(l)=k; %不再划分连通区域，仅选择一个点作为分叉点
-          l=l+1;
+       if ~isempty(find(countmap(sequence(k).number)>=5, 1))||(numel(find(countmap(sequence(k).number)==4))>=3 && NUM(sequence_no(k),1).Area==6)%多个点聚集在一起的情况,只选择一个作为分叉点；处理一种特殊情况
+           reserve_no(l)=k; %不再划分连通区域，仅选择一个点作为分叉点
+           l=l+1;
        else
+           flag=1;
            if mod(no,2)==1
                part_sequence1(m).number=sequence(k).number(1:floor(no/2));%将该连通区域分离为两个区域
                part_sequence2(m).number=sequence(k).number(floor(no/2)+2:end);
                m=m+1;
            else
-               part_sequence1(m).number=sequence(k).number(1:floor(no/2));
-               part_sequence2(m).number=sequence(k).number(floor(no/2)+1:end);
-               m=m+1;
+               if no==6
+                   for h=1:no
+                       coordcandidates(:,h)=points_transform(sequence(k).number(h)', [M, N]);
+                   end
+                   X = unique(coordcandidates(1,:));
+                   [times,coord]=hist(coordcandidates(1,:),X);
+                   maxcount = max(times);
+                   if maxcount==4
+                       target_no=coord(times==maxcount);
+                       coordcandidates(:,coordcandidates(1,:)==target_no)=[];
+                       part_sequence1(m).number=sequence(k).number([1 end-2 end-1]);
+                       part_sequence2(m).number=sequence(k).number(setdiff([1:1:6],[1 end-1 end]));
+                       m=m+1;flag=0;
+                   end
+               end
+               if flag==1
+                   part_sequence1(m).number=sequence(k).number(1:floor(no/2));
+                   part_sequence2(m).number=sequence(k).number(floor(no/2)+1:end);
+                   m=m+1;
+               end
            end
        end
    end
@@ -67,10 +85,5 @@ end
    for i=1:numel(STATS)
        bifu(i,:)=round(STATS(i,1).Centroid);
        ptbifu(i,1)=(bifu(i,1)-1)*M+bifu(i,2);
-   end
-   
+   end  
 end
-
-
-
-
