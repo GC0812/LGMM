@@ -1,4 +1,4 @@
-function [ptbifu] = points_init2(bw)
+function [ptbifu] = points_init(bw)
 
 [M, N]= size(bw);
 imdim = M*N + 1;
@@ -65,7 +65,7 @@ if ~isempty(sequence1)
                 part_sequence2(m).number=setdiff(region(2,:),0);
                 m=m+1;
             else
-                part_sequence1(m).number=array1(j).number(1:3);
+                part_sequence1(m).number=array1(j).number(1:3); %其他情况
                 part_sequence2(m).number=array1(j).number(4:6);
                 m=m+1;
             end
@@ -110,6 +110,6 @@ STATS=[STATS1;STATS2];
 bifu=zeros(numel(STATS),2);ptbifu=zeros(numel(STATS),1);
 for i=1:numel(STATS)
     bifu(i,:)=round(STATS(i,1).Centroid);
-    ptbifu(i,1)=(bifu(i,1)-1)*M+bifu(i,2);
+    ptbifu(i,1)=(bifu(i,1)-1)*M+bifu(i,2);%得到所有分叉点坐标
 end
 end
