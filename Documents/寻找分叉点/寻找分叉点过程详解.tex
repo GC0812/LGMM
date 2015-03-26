@@ -183,9 +183,7 @@
 \setlength{\headheight}{15pt}
 \pagestyle{fancy}
 \fancyhf{}
-%\lhead{\color{black!50!green}2014年秋季学期}
 \chead{\color{black!50!green}}
-%\rhead{\color{black!50!green}通信电子电路}
 \lfoot{\color{blue!50!green}邱欣欣}
 \cfoot{\color{blue!50!green}\href{http://vision.ouc.edu.cn/~zhenghaiyong}{CVBIOUC}}
 \rfoot{\color{blue!50!green}$\cdot$\ \thepage\ $\cdot$}
@@ -198,6 +196,7 @@
 %%---------------------------------------------------------------------
 % \titlepage
 \title{\vspace{-2em}寻找分叉点过程详解\vspace{-0.7em}}
+
 \author{邱欣欣}
 \date{\vspace{-0.7em}2015年3月19日\vspace{-0.7em}}
 %%---------------------------------------------------------------------
@@ -225,14 +224,17 @@
 
 \item 复杂连通区域需要进行三步判断：
 \begin{enumerate}
-\item 当该连通区域像素数为6时，在多种情况中判断出图a情况(\ref{fig:complex1})：图a处理方法与简单连通区域方法相同，只选择中心处作为分叉点（考虑到实际中应该只有一个分叉点）；而图b及其他的情况下，需要进行连通区域的进一步分离：
+\item 当该连通区域像素数为6时，在多种情况中先判断是否为图a情况(\ref{fig:complex1})：否则则判断是否为图c情况，其他则为图b等情况。图a处理方法与简单连通区域方法相同，只选择中心处作为分叉点（考虑到实际中应该只有一个分叉点）。而图b、c及其他的情况下，需要进行连通区域的进一步分离，但两者处理方法不同：图c情况需要求得该连通区域两端的点，再利用该点的8邻域像素确定要分割的两个区域；图b情况则通过连通区域的像素数按像素序号简单分成两部分（图c不能这样处理的原因是对如c左边的情况处理会有错误）。
 \begin{figure}[ht]
 \centering
 \subfigure[]{
 \includegraphics[width=0.2\textwidth]{images/complex1}}
-\hspace{1.5in}
+\hspace{0.4in}
 \subfigure[]{
-\includegraphics[width=0.2\textwidth]{images/complex2}}
+\includegraphics[width=0.2\textwidth]{images/complex6}}
+\hspace{0.4in}
+\subfigure[]{
+\includegraphics[width=0.19\textwidth]{images/complex5}}
 \label{fig:complex1}
 \caption{第一步判断}
 \end{figure}
