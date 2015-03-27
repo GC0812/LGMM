@@ -1,6 +1,6 @@
 function points = points_transform(node, dim, startorder)
 
-% This function extract the bifurcation coordinate from the node
+%函数由序号得到对应的坐标
 
 if (nargin == 2)
    startorder = 1; 
