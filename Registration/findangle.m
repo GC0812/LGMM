@@ -1,6 +1,6 @@
-function outdegs = findangle(boundvec, startidx)
+function outdegs = findangle(boundvec)
 
-% This function computes the bifurcation angle
+%计算分叉点角度
 
 npix = numel(boundvec);
 if (sum(abs(boundvec))==0 || sum(abs(boundvec))== npix )
@@ -10,7 +10,7 @@ end
 
 % degree assignments
 R  = npix/8; %设置24个方向的角度
-dy = [0:1:R, R*ones(1, 2*R-1), R:-1:-R, -R* ones(1,2*R-1), -R:1:-1];
+dy = [0:1:R, R*ones(1, 2*R-1), R:-1:-R, -R* ones(1,2*R-1), -R:1:-1];%得到7*7区域最外围的点的纵坐标（从3点钟方向开始）
 dx = [R*ones(1, R+1), R-1:-1:-R+1, -R*ones(1, 2*R+1), -R+1:1:R-1, R*ones(1, R)];
 degs = atan2(dy, dx)*180/pi;
 degs(degs<0) = degs(degs<0) + 360;
@@ -36,13 +36,15 @@ end
 outdegs(numlabel)= m(1)-m(numlabel);
 outdegs(outdegs<0) = outdegs(outdegs<0)+360;
 
-% circulate the startidx to the first one
-if (nargin == 2)
-    while (boundvec(startidx)==0)
-        startidx = startidx+1;
-        if (startidx>npix)
-            startidx = 1;
-        end
-    end
-    outdegs = circshift(outdegs, [0, -labelmap(startidx)+1]);
+% angle assign to each region %计算与中心点所成的角度
+for k=1:numlabel
+    seeds = sort(degs(labelmap==k)); 
+    m(k) = (seeds(1)+seeds(end))/2;
 end
+m(m<0) = m(m<0)+360;
+
+for k = 1:numlabel-1
+    outdegs(k)  = m(k+1)-m(k);
+end
+outdegs(numlabel)= m(1)-m(numlabel);
+outdegs(outdegs<0) = outdegs(outdegs<0)+360;
