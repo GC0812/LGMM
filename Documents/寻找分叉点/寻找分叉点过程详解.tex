@@ -217,29 +217,31 @@
 \item 简单连通区域形状一般为以下情况(图\ref{fig:simple})，这种情况下直接求取该连通区域的中心处（ \verb|regionprops| 函数）作为分叉点（红色像素处）：
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.8\textwidth]{images/simple}
+\includegraphics[width=0.9\textwidth]{images/simple}
 \caption{简单情况}
 \label{fig:simple}
 \end{figure}
 
 \item 复杂连通区域需要进行三步判断：
 \begin{enumerate}
-\item 当该连通区域像素数为6时，在多种情况中先判断是否为图a情况(图\ref{fig:complex1})：否则则判断是否为图c情况，其他则为图b等情况。图a处理方法与简单连通区域方法相同，只选择中心处作为分叉点（考虑到实际中应该只有一个分叉点）。而图b、c及其他的情况下，需要进行连通区域的进一步分离，但两者处理方法不同：图c情况需要求得该连通区域两端的点，再利用该点的8邻域像素确定要分割的两个区域；图b情况则通过连通区域的像素数按像素序号简单分成两部分（图c不能这样处理的原因是对如c左边的情况处理会有错误）。
+\item 当该连通区域像素数为6时，在多种情况中先判断是否为图a情况(图\ref{fig:complex1})：否则则判断是否为图c情况，其他则为图b等情况。图a处理方法与简单连通区域方法相同，只选择中心处作为分叉点（考虑到实际中应该只有一个分叉点）。而图b、c及其他的情况下，需要进行连通区域的进一步分离，但两者处理方法不同：图c情况需要求得该连通区域两端的点，再利用该点的8邻域像素确定要分割的两个区域；图b情况则通过连通区域的像素数按像素序号简单分成两部分（图c不能这样处理的原因是对c的情况处理会有错误）。图d则是一些其他可能出现的情况（这种情况下图d第5幅图处理方法与图a相同，其他与图b处理情况相同）。
 \begin{figure}[ht]
 \centering
 \subfigure[]{
-\includegraphics[width=0.2\textwidth]{images/complex1}}
-\hspace{0.4in}
+\includegraphics[width=0.19\textwidth]{images/complex1}}
+\hspace{0.3in}
 \subfigure[]{
-\includegraphics[width=0.2\textwidth]{images/complex6}}
-\hspace{0.4in}
+\includegraphics[width=0.5\textwidth]{images/complex6}}
 \subfigure[]{
-\includegraphics[width=0.19\textwidth]{images/complex5}}
+\includegraphics[width=0.26\textwidth]{images/complex5}}
+\hspace{0.3in}
+\subfigure[]{
+\includegraphics[width=0.45\textwidth]{images/complex7}}
 \caption{第一步判断}
 \label{fig:complex1}
 \end{figure}
 
-\item 当连通区域内有一个像素其周围8邻域内有>=5个像素值为1，则认为该连通区域表示的为多像素聚集的情况，如下面所示的几种情况(图\ref{fig:complex3})，此时与简单连通区域处理方法相同，只选择中心处作为分叉点：
+\item 当连通区域内有一个或以上像素其周围8邻域内有>=5个像素值为1，则认为该连通区域表示的为多像素聚集的情况，如下面所示的几种情况(图\ref{fig:complex3})，此时与简单连通区域处理方法相同，只选择中心处作为分叉点：
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=0.3\textwidth]{images/complex3}
