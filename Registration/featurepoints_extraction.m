@@ -40,6 +40,34 @@ order1=find(externalbifu1~=0);
 order2=find(externalbifu2~=0);
 externalorder=intersect(order1,order2);%两幅图像都有外接分叉点的序号
 
+%%得到环上分叉点的正确连接顺序并求出环每条边的像素长度
+cycle=zeros(1,M);cycle(1)=A(1);l=2;
+for i=1:M-1
+    for j=1:M
+        if  cyclebifu1(1,j)==cycle(i) || (i>1 && cyclebifu1(1,j)==cycle(i-1))
+            continue;
+        end
+        cycle_no=find(cyclebifu1(:,j)==cycle(i), 1);
+        if ~isempty(cycle_no)
+            cycle(l)=cyclebifu1(1,j);
+            l=l+1;
+            break;
+        end
+    end
+end
+for i=1:M
+    order(i)=find(A==cycle(i)); %给出环的正确连接顺序
+end
+
+loop=[order 1];length1=zeros(1,numel(loop)-1);length2=zeros(1,numel(loop)-1);
+sequence1(numel(loop)-1).cycle=[];sequence2(numel(loop)-1).cycle=[];
+for i=1:numel(loop)-1
+    [length1(i), sequence1(i).cycle]=pixelcounting1(bw1,cyclebifu1(:,order(i)),A(loop(i+1)));
+    [length2(i), sequence2(i).cycle]=pixelcounting1(bw2,cyclebifu2(:,order(i)),B(loop(i+1)));
+end
+edgeratio=(sum(length1)-M)/(sum(length2)-M);%计算对应环的缩放比例(计算环的四个分叉点时有重复)
+
+
 %%判断都有分叉点的图像的分叉点是否对应
 n=1;bifuorder=0;R=3;
 for i=1:numel(externalorder)
@@ -64,8 +92,8 @@ vesselorder=setdiff(allorder,no1(externalbifu1(1,:)==0));
 invalidnum=[];
 if bifuorder~=0
     for i=1:numel(bifuorder)
-        [pixelnuma1(i), sequencea1(i).points, edgelengtha1(i)]=pixelcounting(bw1,cyclebifu1(:,ceil(bifuorder(i)/2)),externalbifu1(bifuorder(i)));
-        [pixelnuma2(i), sequencea2(i).points, edgelengtha2(i)]=pixelcounting(bw2,cyclebifu2(:,ceil(bifuorder(i)/2)),externalbifu2(bifuorder(i)));
+        [pixelnuma1(i), sequencea1(i).points]=pixelcounting1(bw1,cyclebifu1(:,ceil(bifuorder(i)/2)),externalbifu1(bifuorder(i)));
+        [pixelnuma2(i), sequencea2(i).points]=pixelcounting1(bw2,cyclebifu2(:,ceil(bifuorder(i)/2)),externalbifu2(bifuorder(i)));
     end
     if ~isempty(find(~isnan(pixelnuma1(:))==0, 1)) || ~isempty(find(~isnan(pixelnuma2(:))==0, 1)) %如果计算环边长度有误，去掉此点
         invalidnum=[find(isnan(pixelnuma1(:))==1); find(isnan(pixelnuma2(:))==1)];
@@ -96,12 +124,10 @@ end
 invalidnum=[];
 if vesselorder~=0
     for i=1:numel(vesselorder)
-        [pixelnumb1(i), sequenceb1(i).points, edgelengthb1(i)]=pixelcounting(bw1,cyclebifu1(:,ceil(vesselorder(i)/2)),externalbifu1(vesselorder(i)));
-        [pixelnumb2(i), sequenceb2(i).points, edgelengthb2(i)]=pixelcounting(bw2,cyclebifu2(:,ceil(vesselorder(i)/2)),externalbifu2(vesselorder(i)));
-        sideratioall(i)=edgelengthb1(i)/edgelengthb2(i);
+        [pixelnumb1(i), sequenceb1(i).points]=pixelcounting1(bw1,cyclebifu1(:,ceil(vesselorder(i)/2)),externalbifu1(vesselorder(i)));
+        [pixelnumb2(i), sequenceb2(i).points]=pixelcounting1(bw2,cyclebifu2(:,ceil(vesselorder(i)/2)),externalbifu2(vesselorder(i)));
     end
-%      sideratio1=sum(sideratioall)/numel(vesselorder);
-    sideratio1=1;
+%     edgeratio=1;
     if ~isempty(find(~isnan(pixelnumb1(:))==0, 1)) || ~isempty(find(~isnan(pixelnumb2(:))==0, 1)) %如果计算环边长度有误，去掉此点
         invalidnum=[find(isnan(pixelnumb1(:))==1); find(isnan(pixelnumb2(:))==1)];
         pixelnumb1(invalidnum)=[];
@@ -115,15 +141,15 @@ if vesselorder~=0
     coordvesselendingb1=zeros(numel(vesselorder)-numel(invalidnum),2);coordvesselendingb2=zeros(numel(vesselorder)-numel(invalidnum),2);
 
     for i=1:numel(pixelnumb1)
-        if pixelnumb1(i)<sideratio1*pixelnumb2(i)
-            midpointsb1(i)=sequenceb1(i).points(round(pixelnumb1(i)/2));
-            midpointsb2(i)=sequenceb2(i).points(round(pixelnumb1(i)/2/sideratio1));
+        if pixelnumb1(i)<edgeratio*pixelnumb2(i)
+            midpointsb1(i)=sequenceb1(i).points(round(pixelnumb1(i)/2)+1);
+            midpointsb2(i)=sequenceb2(i).points(round(pixelnumb1(i)/2/edgeratio)+1);
             vesselendingb1(i)=sequenceb1(i).points(end);
-            vesselendingb2(i)=sequenceb2(i).points(round((pixelnumb1(i)-1)/sideratio1));
+            vesselendingb2(i)=sequenceb2(i).points(round((pixelnumb1(i))/edgeratio));
         else
-            midpointsb1(i)=sequenceb1(i).points(round(pixelnumb2(i)/2*sideratio1));
-            midpointsb2(i)=sequenceb2(i).points(round(pixelnumb2(i)/2));
-            vesselendingb1(i)=sequenceb1(i).points(round((pixelnumb2(i)-1)*sideratio1));
+            midpointsb1(i)=sequenceb1(i).points(round(pixelnumb2(i)/2*edgeratio)+1);
+            midpointsb2(i)=sequenceb2(i).points(round(pixelnumb2(i)/2)+1);
+            vesselendingb1(i)=sequenceb1(i).points(round((pixelnumb2(i))*edgeratio));
             vesselendingb2(i)=sequenceb2(i).points(end);
         end
         coordmidpointsb1(i,:)=points_transform(midpointsb1(i)',[M1, N1]);%中点的坐标
