@@ -1,11 +1,10 @@
-function [pixelnum, pixelsequence]=pixelcounting1(bw,seed1,externalbifu)
+function [pixelnum, pixelsequence]=pixelcounting(bw,seed1,externalbifu)
 
 %计算两点之间的距离(即像素个数)，externalbifu=0表明环上的分叉点没有外接分叉点
 
 [M, N]= size(bw);
 imdim = M*N + 1;
 
-bw1=bw;
 seed=seed1(1);
 externalcoord=points_transform(externalbifu',[M,N]);
 Neighbor = [-M, 1, M, -1, -1-M, 1-M,  1+M, -1+M];
@@ -38,7 +37,7 @@ for m = 1:bifunum
             localxy=points_transform(localidx',[M, N]);%求取localidx的坐标
             dist(n)=(externalcoord(1)-localxy(1))^2+(externalcoord(2)-localxy(2))^2;%计算搜索的路径中的点与要找的点的距离
             n=n+1;
-            if sphead~=1 && dist(end)>dist(end-1) %若两者距离变大，则说明该逐渐路径远离目标点，则放弃此路径
+            if sphead~=1 && dist(end)>dist(end-1) && dist(end)>dist(1)%若两者距离变大，则说明该逐渐路径远离目标点，则放弃此路径
                 break;
             end
         end
@@ -74,8 +73,6 @@ if externalbifu~=0
     pixelsequence = [seed node(nn).sequence];%若已知外接分叉点，则应只有一条路径保留
     end
 else
-%     num = 1:1:numel(find(seed1~=0));
-    %nn = setdiff(num,find(targetbifu~=0));
     nn= find(targetbifu==0); %若无外接分叉点，则选择没有求得分叉点的路径
     pixelnum = numel(node(nn).sequence)+1;
     pixelsequence = [seed node(nn).sequence];

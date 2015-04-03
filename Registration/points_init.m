@@ -1,5 +1,7 @@
 function [ptbifu] = points_init(bw)
 
+%求取图像的分叉点
+
 [M, N]= size(bw);
 imdim = M*N + 1;
 
@@ -35,7 +37,7 @@ sequence1=find(bifu_num==6);q=1;m=1;reserve_no1=[];
 if ~isempty(sequence1)
     for j=1:numel(sequence1)
         array1(j).number=find(labelmap==sequence1(j));%求得对应的序列号
-        if numel(find(countmap(array1(j).number)==4))>=3 %判断出文档图2(a)情况
+        if numel(find(countmap(array1(j).number)==4))>=3 || ~isempty(find(countmap(array1(j).number)==5, 1))%判断出文档图2(a)情况
             reserve_no1(q)=j;
             q=q+1;
         else
@@ -48,18 +50,20 @@ if ~isempty(sequence1)
             if maxcount==4                        %判断是否为图2(c)情况
                 target_no=ordinate(times==maxcount);%得出重复次数最大的列号
                 coord(:,coord(1,:)==target_no)=[];%得出位于连通区域两侧的点的坐标
+                region=0;
                 for s=1:2
                     seed2(s)=(coord(1,s)-1)*M+coord(2,s);
                     localidx = seed2(s);
-                    neighidx = localidx + Neighbor;
-                    d=1;
+                    neighidx = localidx + Neighbor;                    
+                    region(s,1)=localidx;
+                    d=2;
                     for i=1:Len
                         idx = neighidx(i);
                         if (idx>0) && (idx<imdim) && (bw1(idx) ==1)
                             region(s,d)=idx;%找到与连通区域两侧的点8邻域内相连的点
                             d=d+1;
                         end
-                    end
+                    end                    
                 end
                 part_sequence1(m).number=setdiff(region(1,:),0);
                 part_sequence2(m).number=setdiff(region(2,:),0);
@@ -82,14 +86,43 @@ for k=1:numel(sequence2)
         reserve_no2(l)=k; %不再划分连通区域，仅选择一个点作为分叉点
         l=l+1;
     else
-        if mod(no,2)==1
-            part_sequence1(m).number=array2(k).number(1:floor(no/2));%将该连通区域分离为两个区域
-            part_sequence2(m).number=array2(k).number(floor(no/2)+2:end);
+        for jj=1:numel(array2(k).number)
+            coord2(:,jj)=points_transform(array2(k).number(jj)', [M, N]);
+        end
+        X2 = unique(coord2(1,:));
+        [times2,ordinate2]=hist(coord2(1,:),X2);%得到所有纵坐标对应的重复次数
+        maxcount2 = max(times2);
+        if maxcount2==4                        %判断是否为图2(c)情况
+            target_no2=ordinate2(times2==maxcount2);%得出重复次数最大的列号
+            coord2(:,coord2(1,:)==target_no2)=[];%得出位于连通区域两侧的点的坐标
+            region2=0;
+            for s=1:2
+                seed2(s)=(coord2(1,s)-1)*M+coord2(2,s);
+                localidx = seed2(s);
+                neighidx = localidx + Neighbor;
+                region2(s,1)=localidx;
+                d=2;
+                for i=1:Len
+                    idx = neighidx(i);
+                    if (idx>0) && (idx<imdim) && (bw1(idx) ==1)
+                        region2(s,d)=idx;%找到与连通区域两侧的点8邻域内相连的点
+                        d=d+1;
+                    end
+                end
+            end
+            part_sequence1(m).number=setdiff(region2(1,:),0);
+            part_sequence2(m).number=setdiff(region2(2,:),0);
             m=m+1;
         else
-            part_sequence1(m).number=array2(k).number(1:floor(no/2));
-            part_sequence2(m).number=array2(k).number(floor(no/2)+1:end);
-            m=m+1;
+            if mod(no,2)==1
+                part_sequence1(m).number=array2(k).number(1:floor(no/2));%将该连通区域分离为两个区域
+                part_sequence2(m).number=array2(k).number(floor(no/2)+2:end);
+                m=m+1;
+            else
+                part_sequence1(m).number=array2(k).number(1:floor(no/2));
+                part_sequence2(m).number=array2(k).number(floor(no/2)+1:end);
+                m=m+1;
+            end
         end
     end
 end

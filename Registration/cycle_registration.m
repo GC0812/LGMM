@@ -1,7 +1,7 @@
 function [outmosaicbw_twice,sae_twice,mytform_twice,flag]=cycle_registration(bw1,bw2)
 
-[featuremat1_3,featuremat1_4,featuremat1_5,loop1_3,loop1_4,loop1_5,linktableoriginal1] = export_featuremat( bw1 ); %获取环结构及其特征向量
-[featuremat2_3,featuremat2_4,featuremat2_5,loop2_3,loop2_4,loop2_5,linktableoriginal2] = export_featuremat( bw2 );
+[featuremat1_3,featuremat1_4,featuremat1_5,loop1_3,loop1_4,loop1_5,linktableoriginal1,bw1] = export_featuremat( bw1 ); %获取环结构及其特征向量
+[featuremat2_3,featuremat2_4,featuremat2_5,loop2_3,loop2_4,loop2_5,linktableoriginal2,bw2] = export_featuremat( bw2 );
 
 if isempty(linktableoriginal1) || isempty(linktableoriginal2)
     outmosaicbw_twice(7).data=[];
