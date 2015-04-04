@@ -15,7 +15,7 @@ else
     no=[1 2 3 4 5 6 7 8 9 10];
     no1=[1 3 5 7 9];
 end
-k=1;
+count=1;
 A=matchingpair1;
 B=matchingpair2;
 
@@ -23,8 +23,8 @@ B=matchingpair2;
 pointsa1 = points_transform(A', [M1, N1]);  %由序号转化为坐标   
 pointsa2 = points_transform(B', [M2, N2]);
 
-points_a(k).img=pointsa1';points_b(k).img=pointsa2';
-k=k+1;
+points_a(count).img=pointsa1';points_b(count).img=pointsa2';
+count=count+1;
 
 %%%%%%%%寻找与环相连的血管上的点及末梢分叉点%%%%%%% 
 
@@ -32,8 +32,50 @@ k=k+1;
 externalbifu1=zeros(2,M);externalbifu2=zeros(2,M);cyclebifu1=zeros(5,M);cyclebifu2=zeros(5,M);
 for i=1:M
     cyclebifu1(:,i)=linktableoriginal1(:,linktableoriginal1(1,:)==A(:,i));%环上每一个分叉点的相邻分叉点序列
-    externalbifu1(:,i)=setdiff(cyclebifu1(:,i),A);%每个环上4个点的外接分叉点
     cyclebifu2(:,i)=linktableoriginal2(:,linktableoriginal2(1,:)==B(:,i));
+end
+
+%%由连接关系将环上的点重新排序
+cycle1=zeros(1,M);cycle1(1)=A(1);l=2;seq1=zeros(1,M);
+cycle2=zeros(1,M);cycle2(1)=B(1);h=2;seq2=zeros(1,M);
+for i=1:M-1
+    for j=1:M
+        if  cyclebifu1(1,j)==cycle1(i) || (i>1 && cyclebifu1(1,j)==cycle1(i-1))
+            continue;
+        end
+        cycle_no1=find(cyclebifu1(:,j)==cycle1(i), 1);
+        if ~isempty(cycle_no1)
+            cycle1(l)=cyclebifu1(1,j);
+            l=l+1;
+            break;
+        end
+    end
+    for k=1:M
+        if  cyclebifu2(1,k)==cycle2(i) || (i>1 && cyclebifu2(1,k)==cycle2(i-1))
+            continue;
+        end
+        cycle_no2=find(cyclebifu2(:,k)==cycle2(i), 1);
+        if ~isempty(cycle_no2)
+            cycle2(h)=cyclebifu2(1,k);
+            h=h+1;
+            break;
+        end
+    end
+end
+for i=1:M
+    seq1(i)=find(A==cycle1(i)); %给出环的正确连接顺序
+    seq2(i)=find(B==cycle2(i)); 
+end
+
+cyclebifu1=cyclebifu1(:,seq1);A=A(seq1);%将环分叉点按逐次相连的顺序重新排序
+cyclebifu2=cyclebifu2(:,seq2);B=B(seq2);
+
+points_a(count-1).img=points_a(count-1).img(:,seq1);
+points_b(count-1).img=points_b(count-1).img(:,seq2);
+
+
+for i=1:M
+    externalbifu1(:,i)=setdiff(cyclebifu1(:,i),A);%每个环上4个点的外接分叉点
     externalbifu2(:,i)=setdiff(cyclebifu2(:,i),B);
 end
 order1=find(externalbifu1~=0);
@@ -41,31 +83,15 @@ order2=find(externalbifu2~=0);
 externalorder=intersect(order1,order2);%两幅图像都有外接分叉点的序号
 
 %%得到环上分叉点的正确连接顺序并求出环每条边的像素长度
-cycle=zeros(1,M);cycle(1)=A(1);l=2;
-for i=1:M-1
-    for j=1:M
-        if  cyclebifu1(1,j)==cycle(i) || (i>1 && cyclebifu1(1,j)==cycle(i-1))
-            continue;
-        end
-        cycle_no=find(cyclebifu1(:,j)==cycle(i), 1);
-        if ~isempty(cycle_no)
-            cycle(l)=cyclebifu1(1,j);
-            l=l+1;
-            break;
-        end
-    end
-end
-for i=1:M
-    order(i)=find(A==cycle(i)); %给出环的正确连接顺序
-end
 
-loop=[order 1];length1=zeros(1,numel(loop)-1);length2=zeros(1,numel(loop)-1);
-sequence1(numel(loop)-1).cycle=[];sequence2(numel(loop)-1).cycle=[];
-for i=1:numel(loop)-1
-    [length1(i), sequence1(i).cycle]=pixelcounting1(bw1,cyclebifu1(:,order(i)),A(loop(i+1)));
-    [length2(i), sequence2(i).cycle]=pixelcounting1(bw2,cyclebifu2(:,order(i)),B(loop(i+1)));
-end
-edgeratio=(sum(length1)-M)/(sum(length2)-M);%计算对应环的缩放比例(计算环的四个分叉点时有重复)
+% loop=[2:1:M 1];
+% length1=zeros(1,M);length2=zeros(1,M);
+% sequence1(M).cycle=[];sequence2(M).cycle=[];
+% for i=1:M
+%     [length1(i), sequence1(i).cycle]=pixelcounting2(bw1,cyclebifu1(:,i),A(loop(i)));
+%     [length2(i), sequence2(i).cycle]=pixelcounting2(bw2,cyclebifu2(:,i),B(loop(i)));
+% end
+% edgeratio=(sum(length1)-M)/(sum(length2)-M);%计算对应环的缩放比例(计算环的四个分叉点时有重复)
 
 
 %%判断都有分叉点的图像的分叉点是否对应
@@ -84,16 +110,16 @@ for i=1:numel(externalorder)
         bifuorder(n)=externalorder(i);n=n+1;%有对应的外接分叉点的序号
     end
 end
-allorder=setdiff(no,bifuorder);
-vesselorder=setdiff(allorder,no1(externalbifu1(1,:)==0));
-
+order3=setdiff(no,bifuorder);
+order4=union(no1(externalbifu1(1,:)==0),no1(externalbifu2(1,:)==0));
+vesselorder=setdiff(order3,order4);
 
 %%对有对应分叉点的环求血管及外接分叉点作为特征点
 invalidnum=[];
 if bifuorder~=0
     for i=1:numel(bifuorder)
-        [pixelnuma1(i), sequencea1(i).points]=pixelcounting1(bw1,cyclebifu1(:,ceil(bifuorder(i)/2)),externalbifu1(bifuorder(i)));
-        [pixelnuma2(i), sequencea2(i).points]=pixelcounting1(bw2,cyclebifu2(:,ceil(bifuorder(i)/2)),externalbifu2(bifuorder(i)));
+        [pixelnuma1(i), sequencea1(i).points]=pixelcounting2(bw1,cyclebifu1(:,ceil(bifuorder(i)/2)),externalbifu1(bifuorder(i)));
+        [pixelnuma2(i), sequencea2(i).points]=pixelcounting2(bw2,cyclebifu2(:,ceil(bifuorder(i)/2)),externalbifu2(bifuorder(i)));
     end
     if ~isempty(find(~isnan(pixelnuma1(:))==0, 1)) || ~isempty(find(~isnan(pixelnuma2(:))==0, 1)) %如果计算环边长度有误，去掉此点
         invalidnum=[find(isnan(pixelnuma1(:))==1); find(isnan(pixelnuma2(:))==1)];
@@ -107,8 +133,8 @@ if bifuorder~=0
     coordbifua1=zeros(numel(bifuorder)-numel(invalidnum),2);coordbifua2=zeros(numel(bifuorder)-numel(invalidnum),2);
 
     for i=1:numel(pixelnuma1)
-        midpointsa1(i)=sequencea1(i).points(round(pixelnuma1(i)/2));%求出血管的中点的序号
-        midpointsa2(i)=sequencea2(i).points(round(pixelnuma2(i)/2));
+        midpointsa1(i)=sequencea1(i).points(round(pixelnuma1(i)/2)+1);%求出血管的中点的序号
+        midpointsa2(i)=sequencea2(i).points(round(pixelnuma2(i)/2)+1);
         coordmidpointsa1(i,:)=points_transform(midpointsa1(i)',[M1, N1]);%中点的坐标
         coordmidpointsa2(i,:)=points_transform(midpointsa2(i)',[M1, N1]);
         coordbifua1(i,:)=points_transform(externalbifu1(bifuorder(i))',[M1, N1]);%血管外接分叉点的坐标
@@ -116,18 +142,18 @@ if bifuorder~=0
     end  
     pointsb1=[coordmidpointsa1;coordbifua1];
     pointsb2=[coordmidpointsa2;coordbifua2];
-    points_a(k).img=pointsb1';points_b(k).img=pointsb2';
-    k=k+1;
+    points_a(count).img=pointsb1';points_b(count).img=pointsb2';
+    count=count+1;
 end
 
 %血管求末梢处（包括分叉点）、1/2处的特征点（包含均有分叉点但不对应；只有一个有分叉点；两个均没分叉点的情况）
 invalidnum=[];
 if vesselorder~=0
     for i=1:numel(vesselorder)
-        [pixelnumb1(i), sequenceb1(i).points]=pixelcounting1(bw1,cyclebifu1(:,ceil(vesselorder(i)/2)),externalbifu1(vesselorder(i)));
-        [pixelnumb2(i), sequenceb2(i).points]=pixelcounting1(bw2,cyclebifu2(:,ceil(vesselorder(i)/2)),externalbifu2(vesselorder(i)));
+        [pixelnumb1(i), sequenceb1(i).points]=pixelcounting2(bw1,cyclebifu1(:,ceil(vesselorder(i)/2)),externalbifu1(vesselorder(i)));
+        [pixelnumb2(i), sequenceb2(i).points]=pixelcounting2(bw2,cyclebifu2(:,ceil(vesselorder(i)/2)),externalbifu2(vesselorder(i)));
     end
-%     edgeratio=1;
+    edgeratio=1;
     if ~isempty(find(~isnan(pixelnumb1(:))==0, 1)) || ~isempty(find(~isnan(pixelnumb2(:))==0, 1)) %如果计算环边长度有误，去掉此点
         invalidnum=[find(isnan(pixelnumb1(:))==1); find(isnan(pixelnumb2(:))==1)];
         pixelnumb1(invalidnum)=[];
@@ -159,15 +185,15 @@ if vesselorder~=0
     end
     pointsc1=[coordmidpointsb1;coordvesselendingb1];
     pointsc2=[coordmidpointsb2;coordvesselendingb2];
-    points_a(k).img=pointsc1';points_b(k).img=pointsc2';
-    k=k+1;
+    points_a(count).img=pointsc1';points_b(count).img=pointsc2';
+    count=count+1;
 end
 
 %%%%%最终的特征点%%%%%%%%%%%
 points_aa(:,1:numel(points_a(1).img(1,:)))=points_a(1).img;
 points_bb(:,1:numel(points_b(1).img(1,:)))=points_b(1).img;
 wa1=1+numel(points_a(1).img(1,:));wb1=1+numel(points_b(1).img(1,:));
-for i=2:k-1
+for i=2:count-1
     points_aa(:,wa1:wa1+numel(points_a(i).img(1,:))-1)=points_a(i).img;
     wa1=wa1+numel(points_a(i).img(1,:));
     points_bb(:,wb1:wb1+numel(points_b(i).img(1,:))-1)=points_b(i).img;

@@ -6,7 +6,6 @@ function [pixelnum, pixelsequence]=pixelcounting(bw,seed1,externalbifu)
 imdim = M*N + 1;
 
 seed=seed1(1);
-externalcoord=points_transform(externalbifu',[M,N]);
 Neighbor = [-M, 1, M, -1, -1-M, 1-M,  1+M, -1+M];
 Len = numel(Neighbor);
 bw(seed) = 0; 
