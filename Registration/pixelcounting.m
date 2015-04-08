@@ -24,22 +24,17 @@ for i=1:Len
 end
 bifunum = numel(setdiff(stacknodes,0))-1;
 
-targetbifu=zeros(1,bifunum);
+targetbifu=zeros(1,bifunum);node(bifunum).sequence=[];outerflag=0;
 for m = 1:bifunum
+    if outerflag==1
+        break;
+    end
     sphead = 1;
     sptail = 1;
     stackmap = stacknodes(m+1);
-    flag=0;n=1;dist=0;
-    while (sphead <= sptail) && flag~=1
+    innerflag=0;
+    while (sphead <= sptail) && innerflag~=1  
         localidx = stackmap(sphead);
-        if externalbifu~=0
-            localxy=points_transform(localidx',[M, N]);%求取localidx的坐标
-            dist(n)=(externalcoord(1)-localxy(1))^2+(externalcoord(2)-localxy(2))^2;%计算搜索的路径中的点与要找的点的距离
-            n=n+1;
-            if sphead~=1 && dist(end)>dist(end-1) && dist(end)>dist(1)%若两者距离变大，则说明该逐渐路径远离目标点，则放弃此路径
-                break;
-            end
-        end
         neighidx = localidx + Neighbor;
         neighidx = setdiff(neighidx,stacknodes);
         for i=1:numel(neighidx)
@@ -48,8 +43,11 @@ for m = 1:bifunum
                 bw(idx) = 0;  
                 if find(idx == setdiff(seed1,seed))~=0
                     targetbifu(m)= idx;%记录环外接或环上的分叉点，若已知有外接分叉点，则只记录外接分叉点
-                    stackmap(end+1) = idx;%将分叉点也加入像素矩阵中
-                    flag = 1;
+                    stackmap(end+1) = idx;%将分叉点也加入像素矩阵中                   
+                    innerflag = 1;
+                    if idx==externalbifu %如果找到外接分叉点，则不再继续寻找
+                        outerflag=1; 
+                    end
                     break;
                 else
                     sptail = sptail + 1;
