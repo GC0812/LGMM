@@ -222,33 +222,33 @@
 \label{fig:simple}
 \end{figure}
 
-\item 复杂连通区域需要进行三步判断：
-\begin{enumerate}
-\item 当该连通区域像素数为6时，在多种情况中先判断是否为图a情况(图\ref{fig:complex1})：否则则判断是否为图c情况，其他则为图b等情况。图a处理方法与简单连通区域方法相同，只选择中心处作为分叉点（考虑到实际中应该只有一个分叉点）。而图b、c及其他的情况下，需要进行连通区域的进一步分离，但两者处理方法不同：图c情况需要求得该连通区域两端的点，再利用该点的8邻域像素确定要分割的两个区域；图b情况则通过连通区域的像素数按像素序号简单分成两部分（图c不能这样处理的原因是对c的情况处理会有错误）。图d则是一些其他可能出现的情况（这种情况下图d第5幅图处理方法与图a相同，其他与图b处理情况相同）。
+\item 当该连通区域像素数为6时，在多种情况中先判断是否为图$a$情况(图\ref{fig:complex1})：否则则判断是否为图$c$情况，其他则为图$b$等情况（$b$和$c$的判断与处理在\verb|specialpoints_init|函数中实现）。图$a$处理方法与简单连通区域方法相同，只选择中心处作为分叉点（考虑到实际中应该只有一个分叉点）。而图$b$、$c$及其他的情况下，需要进行连通区域的进一步分离，但两者处理方法不同：图$c$情况下需要求得该连通区域所有点的横纵坐标，直接确定2个分叉点的序号；图$b$情况则通过连通区域的像素数按像素序号简单分成两部分（图$c$不能这样处理的原因是对c的情况处理会有错误）。图$d$则是一些其他可能出现的情况（这种情况下图$d$与图$b$处理情况相同）。
 \begin{figure}[ht]
 \centering
 \subfigure[]{
-\includegraphics[width=0.19\textwidth]{images/complex1}}
-\hspace{0.3in}
+\includegraphics[width=0.26\textwidth]{images/complex1}}
+\hspace{0.2in}
 \subfigure[]{
-\includegraphics[width=0.5\textwidth]{images/complex6}}
+\includegraphics[width=0.45\textwidth]{images/complex6}}
 \subfigure[]{
 \includegraphics[width=0.26\textwidth]{images/complex5}}
-\hspace{0.3in}
+\hspace{0.8in}
 \subfigure[]{
-\includegraphics[width=0.45\textwidth]{images/complex7}}
+\includegraphics[width=0.35\textwidth]{images/complex7}}
 \caption{第一步判断}
 \label{fig:complex1}
 \end{figure}
 
-\item 当连通区域内有一个或以上像素其周围8邻域内有>=5个像素值为1，则认为该连通区域表示的为多像素聚集的情况，如下面所示的几种情况(图\ref{fig:complex3})，此时与简单连通区域处理方法相同，只选择中心处作为分叉点：
+\item 当连通区域像素数大于6时：
+\begin{enumerate}
+\item 首先判断连通区域内是否有一个或以上像素其周围8邻域内有>=5个像素值为1，是则认为该连通区域表示的为多像素聚集的情况，如下面所示的几种情况(图\ref{fig:complex3})，此时与简单连通区域处理方法相同，只选择中心处作为分叉点：
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=0.3\textwidth]{images/complex3}
 \caption{第二步判断}
 \label{fig:complex3}
 \end{figure}
-\item 排除上述两种情况，将剩下的连通区域按像素数划分为两部分，分别求其中心处的点作为分叉点。如下面的几种情况(图\ref{fig:complex4})：
+\item 将剩下的连通区域划分为两部分：方法与处理像素数为6时图$b$、$c$的情况相同。如下面的几种情况(图\ref{fig:complex4})：
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=0.4\textwidth]{images/complex4}
