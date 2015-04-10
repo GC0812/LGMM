@@ -1,7 +1,7 @@
 function [node] = point_neighbors(bw, pt, R, seed, NeighborNum, labelmap)
 
-% This function search the linked neighbor of the seed
-% Node structure: seed, neighbor numbers, neigh1, link1,neigh2,...
+% 搜索分叉点的邻域，得到连接关系
+% Node结构: 分叉点, 邻接分叉点数目, 邻接分叉点1，邻接分叉点2,...
 
 if (nargin == 5)
     labelmap = points_show(bw, pt, R, false);
@@ -13,11 +13,21 @@ imdim = M*N + 1;
 Neighbor = [-M, 1, M, -1, -1-M, 1-M,  1+M, -1+M];
 Len = numel(Neighbor);
 
+k=1;
+neighidx2 = seed + Neighbor; %8邻域像素
+stacknodes = zeros(1,4);
+for i=1:Len
+    idx2 = neighidx2(i);
+    if (idx2>0) && (idx2<imdim) && (bw(idx2)==1)
+        stacknodes(k)= idx2;
+        k=k+1;
+    end
+end
+branchnum = k-1;%计算该分叉点有几个分支
+
 % bworigin = bw;
 link = zeros(1, NeighborNum); % neighbor and its link point
-
-% assign seed and its border as 0
-labelmap(labelmap==labelmap(seed))= 0; %把labelmap的seed中心位置及周围24个值变为0
+ 
 bw(seed) = 0; 
 stackmap = seed;
 sphead = 1;
@@ -34,7 +44,7 @@ while (sphead <= sptail) && (count< NeighborNum)
             if find(idx==pt)~=0
                 count = count + 1;
                 link(count)=idx;
-                if flag~=0 
+                if flag~=0 && sphead~=1
                 stackmap(end-flag+1:end)=0; %确保当找到一个分叉点后停止寻找，该分叉点周围的点被排除
                 end
                 
@@ -44,7 +54,7 @@ while (sphead <= sptail) && (count< NeighborNum)
                 labelmap(labelmap==labelmap(idx))= 0;%分叉点的8邻域值都变为0
                 neighidx1 = idx+ Neighbor; 
                 tempidx=intersect(stackmap,neighidx1); %去除分叉点周围8个像素中在stackmap中的点
-                if ~isempty(tempidx)
+                if ~isempty(tempidx) && sphead~=1
                     for k=1:numel(tempidx)
                     stackmap(stackmap==tempidx(k))=0;
                     end
@@ -65,5 +75,8 @@ while (sphead <= sptail) && (count< NeighborNum)
     end
     sphead = sphead + 1;
 end
-
+if count<branchnum
+    n=branchnum-count;
+    link(end-n+1:end)=1;
+end
 node=[seed, count, link];

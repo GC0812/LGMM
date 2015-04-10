@@ -5,6 +5,7 @@ function [pixelnum, pixelsequence]=pixelcounting(bw,seed1,externalbifu)
 [M, N]= size(bw);
 imdim = M*N + 1;
 
+bw1=bw;
 seed=seed1(1);
 Neighbor = [-M, 1, M, -1, -1-M, 1-M,  1+M, -1+M];
 Len = numel(Neighbor);
@@ -59,21 +60,33 @@ for m = 1:bifunum
     end
    node(m).sequence=stackmap;
 end
-pixelnum=NaN;pixelsequence=NaN;
 
-if externalbifu~=0
-    nn = find(targetbifu==externalbifu);%确定哪一部分才是要找的外接血管
-    if isempty(nn)
-        return
-    else
-    pixelnum = numel(node(nn).sequence)+1;%加上最初的分叉点
-    pixelsequence = [seed node(nn).sequence];%若已知外接分叉点，则应只有一条路径保留
+pixelnum=NaN;pixelsequence=NaN;
+if isequal(externalbifu,[1 1])
+    nn=find(targetbifu==0);%若无外接分叉点，则选择没有求得分叉点的路径
+    if numel(nn)~=2
+        return;
+    end
+    pixelsequence=[];
+    for i=1:numel(nn)
+        pixelnum(i) = numel(node(nn(i)).sequence)+1;%加上最初的分叉点
+        pixelsequence=[pixelsequence seed node(nn(i)).sequence];
     end
 else
-    nn= find(targetbifu==0); %若无外接分叉点，则选择没有求得分叉点的路径
-    pixelnum = numel(node(nn).sequence)+1;
-    pixelsequence = [seed node(nn).sequence];
+    nn=zeros(1,numel(externalbifu));
+    for i=1:numel(externalbifu)
+        if externalbifu(i)~=0 && externalbifu(i)~=1          
+            nn(i) = find(targetbifu==externalbifu(i));%确定哪一部分才是要找的外接血管
+            if isempty(nn(i))
+                return;
+            end
+        else
+            nn(i)= find(targetbifu==0); %若无外接分叉点，则选择没有求得分叉点的路径
+        end
+    end   
+    pixelsequence=[];
+    for i=1:numel(nn)
+        pixelnum(i) = numel(node(nn(i)).sequence)+1;%加上最初的分叉点
+        pixelsequence=[pixelsequence seed node(nn(i)).sequence];
+    end   
 end
-
-
-

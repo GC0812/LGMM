@@ -2,6 +2,7 @@ function [ linktable4 ] = select_linktable(linktable)
 
 %%选择有效的连接关系，去除无效的特征点
 
+linktable(linktable==1)=0;
 linktable4=[];linktable1=[];
 
 flag=1;
@@ -19,10 +20,9 @@ end
 
 linktable1(:,2)=[]; %把第二列连接分叉点的个数去掉
 
-while flag==1
+while flag==1    
 flag=0;
 L = size(linktable1,1);
-
 for i=1:4*L         %分别找linktable中的点,若一个点的重复个数小于3,则赋值为0
     if(numel(find(linktable1==linktable1(i)))<3)
         linktable1(i)=0;flag=1;
@@ -41,6 +41,7 @@ for j = 1:L
         n=n+1;
     end
 end
+
 m=1;
 for k=1:size(linktable2,1)
     if(linktable2(k,1)~=0)
@@ -52,7 +53,4 @@ linktable1=linktable3;
 end
 
 linktable4=linktable3';
-
-
-end
 
