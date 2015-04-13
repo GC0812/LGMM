@@ -1,5 +1,7 @@
 function [ptbifu]=specialpoints_init(array,M,N)
 
+%处理一些特殊的需要分离的联通区域
+
 labelmap2=zeros(M,N); %对分离的分叉点标记
 no=numel(array);
 arraycoord=zeros(2,no);
@@ -10,13 +12,21 @@ end
 ss1=union(arraycoord(1,:),[]);%使横坐标按顺序排好
 [times1,ordinate1]=hist(arraycoord(1,:),ss1);%得到所有横坐标对应的重复次数
 maxcount=max(times1);
-if maxcount==4  
+if maxcount==4 && no<9 
    repeatx=ordinate1(times1==maxcount);
    ss2=union(arraycoord(2,:),[]);%使纵坐标按顺序排好
    [times2,ordinate2]=hist(arraycoord(2,:),ss2);
    repeaty=ordinate2(times2>=2);
-   ptbifu(1)=(repeatx-1)*M+repeaty(1);
-   ptbifu(2)=(repeatx-1)*M+repeaty(2);
+   if numel(repeaty)>=2
+   ptbifu(1)=(repeatx(1)-1)*M+repeaty(1);
+   ptbifu(2)=(repeatx(1)-1)*M+repeaty(2);
+   elseif numel(repeaty)==1
+       ptbifu(1)=(repeatx(1)-1)*M+repeaty(1);
+       ptbifu(2)=[];
+   else 
+       ptbifu(1)=(repeatx(1)-1)*M+ordinate2(numel(ordinate2)/2);
+       ptbifu(2)=[];
+   end
 else
     if mod(no,2)==1
         part_sequence1=array(1:floor(no/2));%将该连通区域分离为两个区域

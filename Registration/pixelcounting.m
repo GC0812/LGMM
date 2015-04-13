@@ -77,13 +77,14 @@ else
     nn=zeros(1,numel(externalbifu));
     for i=1:numel(externalbifu)
         if externalbifu(i)~=0 && externalbifu(i)~=1          
-            nn(i) = find(targetbifu==externalbifu(i));%确定哪一部分才是要找的外接血管
-            if isempty(nn(i))
-                return;
-            end
+            nn1= find(targetbifu==externalbifu(i));%确定哪一部分才是要找的外接血管            
         else
-            nn(i)= find(targetbifu==0); %若无外接分叉点，则选择没有求得分叉点的路径
+            nn1= find(targetbifu==0); %若无外接分叉点，则选择没有求得分叉点的路径
         end
+        if isempty(nn1)
+            return;
+        end
+        nn(i)=nn1(1);
     end   
     pixelsequence=[];
     for i=1:numel(nn)
@@ -96,9 +97,10 @@ if isequal(externalbifu,[1 1])
     targetcoord=zeros(2,2);tailcoord=zeros(2,2);
     temp=setdiff(targetbifu,0);
     for k=1:2
-        targetcoord(k,:)=points_transform(temp(k)', [M, N]);%分叉点在环上的两个相邻分叉点
-        tailcoord(k,:)=points_transform(pixelsequence(pixelnum(k))', [M, N]);
+        targetcoord(k,:)=points_transform(temp(k)', [M, N]);%分叉点在环上的两个相邻分叉点        
     end
+    tailcoord(1,:)=points_transform(pixelsequence(pixelnum(1))', [M, N]);
+    tailcoord(2,:)=points_transform(pixelsequence(pixelnum(1)+pixelnum(2))', [M, N]);
     bifucoord=points_transform(seed', [M, N]);
     vab=zeros(2,2);vac=zeros(2,2);c=zeros(1,2);angle=zeros(1,2);
     vab(1,:)=[bifucoord(1)-targetcoord(1,1),bifucoord(2)-targetcoord(1,2)];%求得分叉点与环上两个相邻分叉点的向量

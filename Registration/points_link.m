@@ -1,12 +1,6 @@
 function [linktable] = points_link(bw, ptcore, R)
 
-% This function links the current point and its neighbour points
-% The structure of node: current point, number of neighbors, neighbor 1,
-% linkpoint, neighbour 2, linkpoint,...
-
-% if (nargin == 3)
-%    NeighborNum = 4; 
-% end
+%寻找分叉点的邻域点，Node结构: 分叉点, 邻接分叉点数目, 邻接分叉点1，邻接分叉点2,...
 
 NeighborNum = 4; 
 pt = ptcore(:);

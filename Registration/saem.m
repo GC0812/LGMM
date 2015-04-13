@@ -7,7 +7,7 @@ num2=find(outbw2==1);
 m2=numel(num2);
 
 [M1,~]=size(bw1);
-[M2,~]=size(outbw2);
+[M2,N2]=size(outbw2);
 
 mdirect1=mod(num1,M1);       %序号对应的纵坐标
 mdirect1(mdirect1==0)=M1;
@@ -30,10 +30,19 @@ end
 error_all=zeros(1,m2);
 k2=0;k3=1;
 
+num_matrix=zeros(M2,N2);
+for i=1:M2*N2
+    num_matrix(i)=i;
+end
 for i=1:m2
-    squaregionb=[num2(i)-N-N*M2:1:num2(i)-N-N*M2+2*N];
-    for k=2:2*N+1
-        squaregionb=[squaregionb num2(i)-N-N*M2+M2*(k-1):1:num2(i)-N-N*M2+M2*(k-1)+2*N];%%最大7x7的矩形区域
+    if  mdirect2(i)>N && ndireb2(i)>N && (mdirect2(i)+N)<=M2 && (ndireb2(i)+N)<=N2
+        squaregionb=num_matrix(mdirect2(i)-N:mdirect2(i)+N,ndireb2(i)-N:ndireb2(i)+N);
+        squaregionb=squaregionb(:);
+    else
+        squaregionb=num2(i)-N-N*M2:1:num2(i)-N-N*M2+2*N;
+        for k=2:2*N+1
+            squaregionb=[squaregionb num2(i)-N-N*M2+M2*(k-1):1:num2(i)-N-N*M2+M2*(k-1)+2*N];%%最大7x7的矩形区域
+        end
     end
     outelement=intersect(num1(bw1_no(i)),squaregionb(:));
     if isempty(outelement)

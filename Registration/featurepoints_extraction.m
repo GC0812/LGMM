@@ -41,7 +41,8 @@ for i=1:M-1
             continue;
         end
         cycle_no1=find(cyclebifu1(:,j)==cycle1(i), 1);
-        if ~isempty(cycle_no1)
+        if ~isempty(cycle_no1) && (cyclebifu1(1,j)~=cycle1(1) && isempty(find(cycle1==cyclebifu1(1,j), 1)))
+            %除了环的第一个点，其他点不能出现两次，为了避免因为连接关系发生错误影响环顺序的判断
             cycle1(l)=cyclebifu1(1,j);
             l=l+1;
             break;
@@ -52,7 +53,7 @@ for i=1:M-1
             continue;
         end
         cycle_no2=find(cyclebifu2(:,k)==cycle2(i), 1);
-        if ~isempty(cycle_no2)
+        if ~isempty(cycle_no2) && (cyclebifu2(1,k)~=cycle2(1) && isempty(find(cycle2==cyclebifu2(1,k), 1)))
             cycle2(h)=cyclebifu2(1,k);
             h=h+1;
             break;
@@ -75,8 +76,8 @@ for i=1:M
     externalbifu1(:,i)=setdiff(cyclebifu1(:,i),A);%每个环上4个点的外接分叉点
     externalbifu2(:,i)=setdiff(cyclebifu2(:,i),B);
 end
-order1=find((externalbifu1~=0)&(externalbifu1~=1));%order1=find(externalbifu1~=0);
-order2=find((externalbifu2~=0)&(externalbifu2~=1));%order2=find(externalbifu2~=0);
+order1=find((externalbifu1~=0)&(externalbifu1~=1));
+order2=find((externalbifu2~=0)&(externalbifu2~=1));
 externalorder=intersect(order1,order2);%两幅图像都有外接分叉点的序号
 
 %%得到环上分叉点的正确连接顺序并求出环每条边的像素长度
@@ -85,8 +86,8 @@ externalorder=intersect(order1,order2);%两幅图像都有外接分叉点的序�
 % length1=zeros(1,M);length2=zeros(1,M);
 % sequence1(M).cycle=[];sequence2(M).cycle=[];
 % for i=1:M
-%     [length1(i), sequence1(i).cycle]=pixelcounting(bw1,cyclebifu1(:,i),A(loop(i)));
-%     [length2(i), sequence2(i).cycle]=pixelcounting(bw2,cyclebifu2(:,i),B(loop(i)));
+%     [length1(i), sequence1(i).cycle]=pixelcounting2(bw1,cyclebifu1(:,i),A(loop(i)));
+%     [length2(i), sequence2(i).cycle]=pixelcounting2(bw2,cyclebifu2(:,i),B(loop(i)));
 % end
 % edgeratio=(sum(length1)-M)/(sum(length2)-M);%计算对应环的缩放比例(计算环的四个分叉点时有重复)
 

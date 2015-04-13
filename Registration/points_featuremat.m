@@ -40,6 +40,7 @@ posi = mod(seeds, M); %seeds的行数和列数
 posi(posi==0)= M; 
 posj = 1 + (seeds-posi)/M;%行数
 
+bDist=zeros(1,idx);mAng=zeros(1,idx);
 for k =1:idx %求seeds中相邻元素的距离和角度
     if k==idx
         dy = -(posi(1)-posi(idx));
@@ -63,6 +64,7 @@ end
 
 
 % 求解分支间的角度
+bAng=zeros(1,idx);
 bAng(1)= mAng(1)-mAng(idx);
 for k=2:idx
     bAng(k)  = mAng(k)-mAng(k-1);

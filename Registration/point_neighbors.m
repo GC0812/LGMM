@@ -75,7 +75,7 @@ while (sphead <= sptail) && (count< NeighborNum)
     end
     sphead = sphead + 1;
 end
-if count<branchnum
+if count<branchnum && branchnum<=4
     n=branchnum-count;
     link(end-n+1:end)=1;
 end

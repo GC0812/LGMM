@@ -33,7 +33,10 @@ for i=1:numlabel
 end
 
 %%处理连通区域像素数为6的情况
-sequence1=find(bifu_num==6);reserve_no1=[];array1(numel(sequence1)).number=[];q=1;m=1;
+sequence1=find(bifu_num==6);reserve_no1=[];q=1;m=1;ptbifu1=[];
+if ~isempty(sequence1)
+    array1(numel(sequence1)).number=[];
+end
 if ~isempty(sequence1)
     for j=1:numel(sequence1)
         array1(j).number=find(labelmap==sequence1(j));%求得对应的序列号
@@ -41,8 +44,14 @@ if ~isempty(sequence1)
             reserve_no1(q)=j;
             q=q+1;
         else
-            [ptbifu1(m:m+1)]=specialpoints_init(array1(j).number,M,N);%类似图2（c）情况
-            m=m+2;
+            [ptbifu11]=specialpoints_init(array1(j).number,M,N);%类似图2（c）情况
+            if numel(ptbifu11)==2
+                ptbifu1(m:m+1)=ptbifu11;
+                m=m+2;
+            else
+                ptbifu1(m)=ptbifu11;
+                m=m+1;
+            end
         end
     end
 end
@@ -58,8 +67,14 @@ for k=1:numel(sequence2)
         reserve_no2(l)=k; %不再划分连通区域，仅选择一个点作为分叉点
         l=l+1;
     else
-        [ptbifu1(m:m+1)]=specialpoints_init(array2(k).number,M,N);
-        m=m+2;
+        [ptbifu22]=specialpoints_init(array2(k).number,M,N);
+        if numel(ptbifu22)==2
+            ptbifu1(m:m+1)=ptbifu22;
+            m=m+2;
+        else
+            ptbifu1(m)=ptbifu22;
+            m=m+1;
+        end
     end
 end
 

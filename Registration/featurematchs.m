@@ -32,4 +32,4 @@ P2 = 1+(seeds-P1)/M1; %列数
 
 idxmat = idxmat(:);
 Pidx = idxmat(idx);
-
+Pidx = Pidx(1);

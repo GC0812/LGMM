@@ -24,25 +24,14 @@ if (boundvec(1)==1 && boundvec(end)==1)
 end
 
 % angle assign to each region %计算与中心点所成的角度
+m=zeros(1,numlabel);
 for k=1:numlabel
     seeds = sort(degs(labelmap==k)); 
     m(k) = (seeds(1)+seeds(end))/2;
 end
 m(m<0) = m(m<0)+360;
 
-for k = 1:numlabel-1
-    outdegs(k)  = m(k+1)-m(k);
-end
-outdegs(numlabel)= m(1)-m(numlabel);
-outdegs(outdegs<0) = outdegs(outdegs<0)+360;
-
-% angle assign to each region %计算与中心点所成的角度
-for k=1:numlabel
-    seeds = sort(degs(labelmap==k)); 
-    m(k) = (seeds(1)+seeds(end))/2;
-end
-m(m<0) = m(m<0)+360;
-
+outdegs=zeros(1,numlabel-1);
 for k = 1:numlabel-1
     outdegs(k)  = m(k+1)-m(k);
 end

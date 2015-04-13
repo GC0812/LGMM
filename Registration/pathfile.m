@@ -5,7 +5,7 @@ imagepath1=strcat('./Dataset/Skeleton/',foldername1,'/','*.tif');
 imagename1=dir(imagepath1);%第一列图像的图片名称
 k1=1;false1=[];
 for m=1:numel(imagename1)
-    if imagename1(m,1).name(1)=='.'|| imagename1(i,1).isdir==1
+    if imagename1(m,1).name(1)=='.'|| imagename1(m,1).isdir==1
         false1(k1)=m;
         k1=k1+1;
     end
@@ -16,7 +16,7 @@ imagepath2=strcat('./Dataset/Skeleton/',foldername2,'/','*.tif');
 imagename2=dir(imagepath2);%与第一列相对应的图像的的名称
 k2=1;false2=[];
 for j=1:numel(imagename2)
-    if imagename2(j,1).name(1)=='.'|| imagename2(i,1).isdir==1
+    if imagename2(j,1).name(1)=='.'|| imagename2(j,1).isdir==1
         false2(k2)=j;
         k2=k2+1;
     end

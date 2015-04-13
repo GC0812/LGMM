@@ -1,9 +1,9 @@
-function [ featuremat3,featuremat4,featuremat5,loop3,loop4,loop5,linktableoriginal,bw1] = export_featuremat( bw )
+function [ featuremat3,featuremat4,featuremat5,loop3,loop4,loop5,linktableoriginal,bw1,ptbifu] = export_featuremat( bw )
 
 featuremat3=[];featuremat4=[];featuremat5=[];loop3=[];loop4=[];loop5=[];
 bw1=bw;
 
-[ptbifu] = points_init1(bw1); %找分叉点
+[ptbifu] = points_init(bw1); %找分叉点
 bw1(ptbifu)=1;
 radius=3;
 
