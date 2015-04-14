@@ -1,11 +1,7 @@
-function [node] = point_neighbors(bw, pt, R, seed, NeighborNum, labelmap)
+function [node] = point_neighbors(bw, pt, seed, NeighborNum)
 
 % 搜索分叉点的邻域，得到连接关系
 % Node结构: 分叉点, 邻接分叉点数目, 邻接分叉点1，邻接分叉点2,...
-
-if (nargin == 5)
-    labelmap = points_show(bw, pt, R, false);
-end
 
 [M, N]= size(bw);
 imdim = M*N + 1;
@@ -23,10 +19,10 @@ for i=1:Len
         k=k+1;
     end
 end
-branchnum = k-1;%计算该分叉点有几个分支
+branchnum = k-1;%由分叉点8邻域出现像素数判断该分叉点有几个分支
 
 % bworigin = bw;
-link = zeros(1, NeighborNum); % neighbor and its link point
+link = zeros(1, NeighborNum);
  
 bw(seed) = 0; 
 stackmap = seed;
@@ -45,13 +41,12 @@ while (sphead <= sptail) && (count< NeighborNum)
                 count = count + 1;
                 link(count)=idx;
                 if flag~=0 && sphead~=1
-                stackmap(end-flag+1:end)=0; %确保当找到一个分叉点后停止寻找，该分叉点周围的点被排除
+                stackmap(end-flag+1:end)=0; %确保当找到一个分叉点后该分支停止寻找，该分叉点周围的点被排除
                 end
                 
-                if (count>= NeighborNum) 
+                if (count>= NeighborNum) %分支数最大为4
                     break; 
                 end
-                labelmap(labelmap==labelmap(idx))= 0;%分叉点的8邻域值都变为0
                 neighidx1 = idx+ Neighbor; 
                 tempidx=intersect(stackmap,neighidx1); %去除分叉点周围8个像素中在stackmap中的点
                 if ~isempty(tempidx) && sphead~=1
@@ -77,6 +72,6 @@ while (sphead <= sptail) && (count< NeighborNum)
 end
 if count<branchnum && branchnum<=4
     n=branchnum-count;
-    link(end-n+1:end)=1;
+    link(end-n+1:end)=1;%分支存在，但末尾没有分叉点则赋值为1
 end
 node=[seed, count, link];

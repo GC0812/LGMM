@@ -1,27 +1,28 @@
-function [ featuremat3,featuremat4,featuremat5,loop3,loop4,loop5,linktableoriginal,bw1,ptbifu] = export_featuremat( bw )
+function [ featuremat3,featuremat4,featuremat5,loop3,loop4,loop5,linktableoriginal,bw,ptbifu] = export_featuremat( bw )
+
+%求得图像的分叉点，连接关系，构造3种环结构并输出特征向量
 
 featuremat3=[];featuremat4=[];featuremat5=[];loop3=[];loop4=[];loop5=[];
-bw1=bw;
 
-[ptbifu] = points_init(bw1); %找分叉点
-bw1(ptbifu)=1;
+[ptbifu] = points_init(bw); %找分叉点
+bw(ptbifu)=1;
 radius=3;
-
-% label = points_show(bw1,ptbifu,3);  %标记分叉点
-% label_bifu = 1-cat(3, bw1, bw1+label , bw1);
+% 
+% label = points_show(bw,ptbifu,3);  %标记分叉点
+% label_bifu = 1-cat(3, bw, bw+label , bw);
 % figure,imshow(label_bifu)
 
-[linktableoriginal] = points_link(bw1, ptbifu, radius); %找相邻分叉点
+[linktableoriginal] = points_link(bw, ptbifu); %找到每个分叉点的相邻分叉点构成连接关系
 
-[linktable] = select_linktable(linktableoriginal);
+[linktable] = select_linktable(linktableoriginal);%挑选得到能构成环的连接关系
 
 if isempty(linktable)
     return
 end
 
-% ptbifu=unique(linktable(1,:),'legacy');
-% label = points_show(bw1,ptbifu,3);  %标记分叉点
-% label_bifu = 1-cat(3, bw1, bw1+label , bw1);
+% pt=unique(linktable(1,:),'legacy');
+% label = points_show(bw,pt,3);  %标记分叉点
+% label_bifu = 1-cat(3, bw, bw+label , bw);
 % figure,imshow(label_bifu)   
 
 [~,N] = size(linktable);
@@ -113,8 +114,7 @@ for i=1:N %从linktable第一列开始一直到最后一列
                             loop4_num=loop4_num+1;
                         case 5
                             loop5(loop5_num,:)=loop_points;
-                            loop5_num=loop5_num+1;
-                            
+                            loop5_num=loop5_num+1;                            
                     end
                 end
             end
@@ -325,21 +325,21 @@ Len = size(loop3,1);
 num_featuremat3=1;
 for count=1:Len
     bifu_loop = loop3(count,:);
-    featuremat3(num_featuremat3,:)= points_featuremat(bw1, bifu_loop, radius);
+    featuremat3(num_featuremat3,:)= points_featuremat(bw, bifu_loop, radius);
     num_featuremat3=num_featuremat3+1;
 end
 Len = size(loop4,1);
 num_featuremat4=1;
 for count=1:Len
     bifu_loop = loop4(count,:);
-    featuremat4(num_featuremat4,:)= points_featuremat(bw1, bifu_loop, radius);
+    featuremat4(num_featuremat4,:)= points_featuremat(bw, bifu_loop, radius);
     num_featuremat4=num_featuremat4+1;
 end
 Len = size(loop5,1);
 num_featuremat5=1;
 for count=1:Len
     bifu_loop = loop5(count,:);
-    featuremat5(num_featuremat5,:)= points_featuremat(bw1, bifu_loop, radius);
+    featuremat5(num_featuremat5,:)= points_featuremat(bw, bifu_loop, radius);
     num_featuremat5=num_featuremat5+1;
 end
 

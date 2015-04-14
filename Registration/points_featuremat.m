@@ -1,10 +1,12 @@
 function [ featuremat,order] = points_featuremat(bw, seeds, R)
 
-idx = numel(seeds); %计算环中每个分叉点的角度，写成一个一维向量的形式
+%求得特征向量：距离、分支角度、及分叉点的角度
+
+idx = numel(seeds); 
 n=1;
 for count = 1:idx
     anglevec = point_anglevec(bw, seeds(1,count), R);
-    angel=findangle(anglevec);%每个分叉点的分叉点角度
+    angel=findangle(anglevec);%每个分叉点的分支间角度
     NeighborNum = numel(find(angel~=0));
     switch NeighborNum
         case 0 
@@ -54,16 +56,15 @@ for k =1:idx %求seeds中相邻元素的距离和角度
 end
 mAng(mAng<0) = mAng(mAng<0) + 360;
 
-% counterclock start from 3 oclock, rearanage features
+%将角度按大小排列作为顺序
 [mAng,order] = sort(mAng);
 bDist = bDist(order);
     
-for k=1:idx %将每个分叉点的叉点角度按顺序重新排列
+for k=1:idx %将每个分叉点的分支间角度按顺序重新排列
     nAng(5*(k-1)+1: 5*k) = angs( 5*(order(k)-1)+1: 5*order(k));
 end
 
-
-% 求解分支间的角度
+%求解分支间的角度
 bAng=zeros(1,idx);
 bAng(1)= mAng(1)-mAng(idx);
 for k=2:idx
@@ -71,7 +72,7 @@ for k=2:idx
 end
 bAng(bAng<0) = bAng(bAng<0) + 360;
 
-% 正则化距离及角度
+%正则化距离及角度
 bDist = bDist/sum(bDist);
 bAng  = bAng/360;
 nAng  = nAng/360;

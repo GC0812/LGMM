@@ -100,7 +100,7 @@ if isequal(externalbifu,[1 1])
         targetcoord(k,:)=points_transform(temp(k)', [M, N]);%分叉点在环上的两个相邻分叉点        
     end
     tailcoord(1,:)=points_transform(pixelsequence(pixelnum(1))', [M, N]);
-    tailcoord(2,:)=points_transform(pixelsequence(pixelnum(1)+pixelnum(2))', [M, N]);
+    tailcoord(2,:)=points_transform(pixelsequence(end)', [M, N]);
     bifucoord=points_transform(seed', [M, N]);
     vab=zeros(2,2);vac=zeros(2,2);c=zeros(1,2);angle=zeros(1,2);
     vab(1,:)=[bifucoord(1)-targetcoord(1,1),bifucoord(2)-targetcoord(1,2)];%求得分叉点与环上两个相邻分叉点的向量

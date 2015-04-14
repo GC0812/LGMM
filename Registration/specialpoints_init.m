@@ -24,7 +24,7 @@ if maxcount==4 && no<9
        ptbifu(1)=(repeatx(1)-1)*M+repeaty(1);
        ptbifu(2)=[];
    else 
-       ptbifu(1)=(repeatx(1)-1)*M+ordinate2(numel(ordinate2)/2);
+       ptbifu(1)=(repeatx(1)-1)*M+ordinate2(round(numel(ordinate2)/2));
        ptbifu(2)=[];
    end
 else

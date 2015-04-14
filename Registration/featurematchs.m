@@ -1,6 +1,6 @@
 function [P1, P2,Pidx] = featurematchs(featuremat1, featuremat2, NeighborNum)
 
-%寻找最佳匹配对
+%寻找匹配对，按相似程度大小排列
 
 M1 = size(featuremat1, 1);
 M2 = size(featuremat2, 1);

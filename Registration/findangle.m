@@ -8,14 +8,14 @@ if (sum(abs(boundvec))==0 || sum(abs(boundvec))== npix )
     return;
 end
 
-% degree assignments
-R  = npix/8; %设置24个方向的角度
+%设置24个方向的角度
+R  = npix/8; 
 dy = [0:1:R, R*ones(1, 2*R-1), R:-1:-R, -R* ones(1,2*R-1), -R:1:-1];%得到7*7区域最外围的点的纵坐标（从3点钟方向开始）
 dx = [R*ones(1, R+1), R-1:-1:-R+1, -R*ones(1, 2*R+1), -R+1:1:R-1, R*ones(1, R)];
 degs = atan2(dy, dx)*180/pi;
 degs(degs<0) = degs(degs<0) + 360;
 
-% find connected region
+%寻找连通区域
 [labelmap, numlabel] = bwlabel(boundvec, 8);
 if (boundvec(1)==1 && boundvec(end)==1)
     degs(labelmap == labelmap(end)) = degs(labelmap == labelmap(end))-360;
@@ -23,7 +23,7 @@ if (boundvec(1)==1 && boundvec(end)==1)
     numlabel= numlabel-1;
 end
 
-% angle assign to each region %计算与中心点所成的角度
+%%计算与中心点所成的角度
 m=zeros(1,numlabel);
 for k=1:numlabel
     seeds = sort(degs(labelmap==k)); 
