@@ -1,0 +1,246 @@
+\documentclass[12pt]{article}
+%%---------------------------------------------------------------------
+% packages
+% geometry
+\usepackage{geometry}
+% font
+\usepackage{fontspec}
+\defaultfontfeatures{Mapping=tex-text}  %%如果没有它，会有一些 tex 特殊字符无法正常使用，比如连字符。
+\usepackage{xunicode,xltxtra}
+\usepackage[BoldFont,SlantFont,CJKnumber,CJKchecksingle]{xeCJK}  % \CJKnumber{12345}: 一万二千三百四十五
+\usepackage{CJKfntef}  %%实现对汉字加点、下划线等。
+\usepackage{pifont}  % \ding{}
+% math
+\usepackage{amsmath,amsfonts,amssymb}
+% color
+\usepackage{color}
+\usepackage{xcolor}
+\definecolor{EYE}{RGB}{199,237,204}
+\definecolor{FLY}{RGB}{128,0,128}
+\definecolor{ZHY}{RGB}{139,0,255}
+% graphics
+\usepackage[americaninductors,europeanresistors]{circuitikz}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows,shadows,shapes,calc,mindmap,trees,backgrounds}  % placements=positioning
+\usepackage{graphicx}  % \includegraphics[]{}
+\usepackage{subfigure}  %%图形或表格并排排列
+% table
+\usepackage{colortbl,dcolumn}  %% 彩色表格
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{booktabs}
+% code
+\usepackage{fancyvrb}
+\usepackage{listings}
+% title
+\usepackage{titlesec}
+% head/foot
+\usepackage{fancyhdr}
+% ref
+\usepackage{hyperref}
+% pagecolor
+\usepackage[pagecolor={EYE}]{pagecolor}
+% tightly-packed lists
+\usepackage{mdwlist}
+
+\usepackage{styles/iplouccfg}
+\usepackage{styles/zhfontcfg}
+\usepackage{styles/iplouclistings}
+
+%%---------------------------------------------------------------------
+% settings
+% geometry
+\geometry{left=2cm,right=1cm,top=2cm,bottom=2cm}  %设置 上、左、下、右 页边距
+\linespread{1.5} %行间距
+% font
+\setCJKmainfont{Adobe Kaiti Std}
+%\setmainfont[BoldFont=Adobe Garamond Pro Bold]{Apple Garamond}  % 英文字体
+%\setmainfont[BoldFont=Adobe Garamond Pro Bold,SmallCapsFont=Apple Garamond,SmallCapsFeatures={Scale=0.7}]{Apple Garamond}  %%苹果字体没有SmallCaps
+\setCJKmonofont{Adobe Fangsong Std}
+% graphics
+\graphicspath{{figures/}}
+\tikzset{
+    % Define standard arrow tip
+    >=stealth',
+    % Define style for boxes
+    punkt/.style={
+           rectangle,
+           rounded corners,
+           draw=black, very thick,
+           text width=6.5em,
+           minimum height=2em,
+           text centered},
+    % Define arrow style
+    pil/.style={
+           ->,
+           thick,
+           shorten <=2pt,
+           shorten >=2pt,},
+    % Define style for FlyZhyBall
+    FlyZhyBall/.style={
+      circle,
+      minimum size=6mm,
+      inner sep=0.5pt,
+      ball color=red!50!blue,
+      text=white,},
+    % Define style for FlyZhyRectangle
+    FlyZhyRectangle/.style={
+      rectangle,
+      rounded corners,
+      minimum size=6mm,
+      ball color=red!50!blue,
+      text=white,},
+    % Define style for zhyfly
+    zhyfly/.style={
+      rectangle,
+      rounded corners,
+      minimum size=6mm,
+      ball color=red!25!blue,
+      text=white,},
+    % Define style for new rectangle
+    nrectangle/.style={
+      rectangle,
+      draw=#1!50,
+      fill=#1!20,
+      minimum size=5mm,
+      inner sep=0.1pt,}
+}
+\ctikzset{
+  bipoles/length=.8cm
+}
+% code
+\lstnewenvironment{VHDLcode}[1][]{%
+  \lstset{
+    basicstyle=\footnotesize\ttfamily\color{black},%
+    columns=flexible,%
+    framexleftmargin=.7mm,frame=shadowbox,%
+    rulesepcolor=\color{blue},%
+%    frame=single,%
+    backgroundcolor=\color{yellow!20},%
+    xleftmargin=1.2\fboxsep,%
+    xrightmargin=.7\fboxsep,%
+    numbers=left,numberstyle=\tiny\color{blue},%
+    numberblanklines=false,numbersep=7pt,%
+    language=VHDL%
+    }\lstset{#1}}{}
+\lstnewenvironment{VHDLmiddle}[1][]{%
+  \lstset{
+    basicstyle=\scriptsize\ttfamily\color{black},%
+    columns=flexible,%
+    framexleftmargin=.7mm,frame=shadowbox,%
+    rulesepcolor=\color{blue},%
+%    frame=single,%
+    backgroundcolor=\color{yellow!20},%
+    xleftmargin=1.2\fboxsep,%
+    xrightmargin=.7\fboxsep,%
+    numbers=left,numberstyle=\tiny\color{blue},%
+    numberblanklines=false,numbersep=7pt,%
+    language=VHDL%
+    }\lstset{#1}}{}
+\lstnewenvironment{VHDLsmall}[1][]{%
+  \lstset{
+    basicstyle=\tiny\ttfamily\color{black},%
+    columns=flexible,%
+    framexleftmargin=.7mm,frame=shadowbox,%
+    rulesepcolor=\color{blue},%
+%    frame=single,%
+    backgroundcolor=\color{yellow!20},%
+    xleftmargin=1.2\fboxsep,%
+    xrightmargin=.7\fboxsep,%
+    numbers=left,numberstyle=\tiny\color{blue},%
+    numberblanklines=false,numbersep=7pt,%
+    language=VHDL%
+    }\lstset{#1}}{}
+% pdf
+\hypersetup{pdfpagemode=FullScreen,%
+            pdfauthor={Haiyong Zheng},%
+            pdftitle={Title},%
+            CJKbookmarks=true,%
+            bookmarksnumbered=true,%
+            bookmarksopen=false,%
+            plainpages=false,%
+            colorlinks=true,%
+            citecolor=green,%
+            filecolor=magenta,%
+            linkcolor=cyan,%red(default)
+            urlcolor=cyan}
+% section
+%http://tex.stackexchange.com/questions/34288/how-to-place-a-shaded-box-around-a-section-label-and-name
+\newcommand\titlebar{%
+\tikz[baseline,trim left=3.1cm,trim right=3cm] {
+    \fill [cyan!25] (2.5cm,-1ex) rectangle (\textwidth+3.1cm,2.5ex);
+    \node [
+        fill=cyan!60!white,
+        anchor= base east,
+        rounded rectangle,
+        minimum height=3.5ex] at (3cm,0) {
+        \textbf{\thesection.}
+    };
+}%
+}
+\titleformat{\section}{\Large\bf\color{blue}}{\titlebar}{0.1cm}{}
+% head/foot
+\setlength{\headheight}{15pt}
+\pagestyle{fancy}
+\fancyhf{}
+%\lhead{\color{black!50!green}2014年秋季学期}
+\chead{\color{black!50!green}}
+%\rhead{\color{black!50!green}通信电子电路}
+\lfoot{\color{blue!50!green}邱欣欣}
+\cfoot{\color{blue!50!green}\href{http://vision.ouc.edu.cn/~zhenghaiyong}{CVBIOUC}}
+\rfoot{\color{blue!50!green}$\cdot$\ \thepage\ $\cdot$}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+%%---------------------------------------------------------------------
+\begin{document}
+%%---------------------------------------------------------------------
+%%---------------------------------------------------------------------
+% \titlepage
+\title{\vspace{-2em}血管长度计算（像素计数）\vspace{-0.7em}}
+\author{邱欣欣}
+\date{\vspace{-0.7em}2015年4月15日\vspace{-0.7em}}
+%%---------------------------------------------------------------------
+\maketitle\thispagestyle{fancy}
+%%---------------------------------------------------------------------
+%\maketitle
+%\tableofcontents 
+
+\section{简介}
+在GLMM算法的全局配准部分，提取环-血管特征点时，需要求得血管中心及末端的特征点，因此计算与环上分叉点相连的血管的长度是必要的。这部分功能主要由 \verb|Registration/pixelcounting.m|这个程序实现。
+
+程序输入为二值图像，分叉点的连接关系矩阵（包含所有与该分叉点相连的分叉点、分支信息），及外接目标序号（序号不为1则表示该分叉点存在外接分叉点，序号为1则表示该分拆单有分支但末端没有分叉点）。输出为血管的长度，血管的所有像素序号。
+
+注意：这里的血管长度指的是环上的分叉点到环外与它相连的血管的第一级分叉点或末梢（程序中已给出，即外接目标）之间的距离，在图像中即为两者之间血管的像素个数。
+
+\section{算法思路}
+算法的步骤如下，图例如下\ref{fig:例子}：
+\begin{enumerate}
+\item 以分叉点为中心，求其8邻域内像素值为1的点，像素个数代表了该分叉点可能的分支数，也决定了下一步血管搜索路径的起始点。
+\item 对每一条分支，从起始点（将该起始点加入到stackmap中备用）开始，求其8邻域内像素值为1的点，然后判断该点是否属于分叉点的连接关系矩阵：若是将该点序号加入到目标向量（targetbifu）中以便后续判断，同时进入下一条分支的搜寻；不是则将该点加入到stackmap中备用，待该点8邻域内的点均判断一遍后，处理stackmap中的下一个点，直到stackmap中所有点都按上述方式处理一遍。
+\item 若外接目标为分叉点，在加入目标向量的某个点等于外接目标分叉点时，便可以停止所有分支的寻找，同时由stackmap得到血管的长度及所有像素序号。若外接目标为没有分叉点的分支，目标向量中序号为0所对应的stackmap即为所求。
+\end{enumerate}
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{images/例子}
+\caption{算法示例}
+\label{fig:例子}
+\end{figure}
+
+\section{其他}
+针对环上可能出现的四分叉的情况，\verb|pixelcounting|函数又进行了一些处理：
+\begin{enumerate}
+\item 若外接目标的两个分支均没有分叉点，找到目标向量中两个序号为0所对应的像素集，即为所求。其他情况，如外接目标有一个或两个带分叉点的分支、外接目标只有一个没有分叉点的分支、外接目标的两条分支一条分支有分叉点，一条分支没有分叉点，则统一处理。
+\item 对于接目标的两个分支均没有分叉点的情况，由于都是求目标向量中序号为0的点，无法确保两幅图像中的两条分支一一对应，因此需要进一步判断：首先确定与该分叉点相连的环上的两个相邻分叉点，选定其中一个相邻分叉点与该分叉点连线，分别计算两个分支与该连线间的角度，根据角度大小调整位置，使结果均按一定的顺序排序。如下图\ref{fig:四分叉}。
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.5\textwidth]{images/四分叉}
+\caption{四分叉例子}
+\label{fig:四分叉}
+\end{figure}
+\end{enumerate}
+
+
+
+%%---------------------------------------------------------------------
+\end{document}
