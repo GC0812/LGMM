@@ -36,10 +36,10 @@ for i = 1: numel(ptbifu1)
         continue;                    %若为空则跳过
     else
         anglevec1 = point_anglevec(bw1,ptbifu1(i) , 3); %若有分叉点，则计算角度
-        angel1=findangle(anglevec1);
+        angel1=find_angle(anglevec1);
         for j=1:numel(bifu_in_area)
             anglevec = point_anglevec(outbw2,bifu_in_area(j), 3);
-            angle=findangle(anglevec);
+            angle=find_angle(anglevec);
             if (numel(angle)==numel(angel1)) && ~isempty(angle)           %若与参考图像中的分叉点的角度个数一致，则保存在similar_bifu中备用
                 similar_bifu(count_bifu,:) = angle;
                 difference(count_bifu) = mean(abs(similar_bifu(count_bifu,:) - angel1));

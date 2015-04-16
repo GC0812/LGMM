@@ -63,7 +63,7 @@ if ~isempty(sequence2)
 end
 for k=1:numel(sequence2)
     array2(k).number=find(labelmap==sequence2(k));%得到满足条件的区域序号
-    if ~isempty(find(countmap(array2(k).number)>=5, 1))%多个点聚集在一起的情况,只选择一个作为分叉点
+    if ~isempty(find(countmap(array2(k).number)>=5, 1)) && numel(array2(k).number)<11%多个点聚集在一起的情况,只选择一个作为分叉点
         reserve_no2(l)=k; %不再划分连通区域，仅选择一个点作为分叉点
         l=l+1;
     else

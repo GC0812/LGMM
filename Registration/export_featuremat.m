@@ -299,21 +299,21 @@ loop5_num=1;
 
 path_points=[];
 for i=1:size(loopa,1)
-    temp = verifystructure( linktable1,loopa(i,:),path_points );
+    temp = verify_structure( linktable1,loopa(i,:),path_points );
     if(~isempty(temp))
         loop3(loop3_num,:)=temp;
         loop3_num=loop3_num+1;
     end
 end
 for i=1:size(loopb,1)
-    temp = verifystructure( linktable1,loopb(i,:),path_points );
+    temp = verify_structure( linktable1,loopb(i,:),path_points );
     if(~isempty(temp))
         loop4(loop4_num,:)=temp;
         loop4_num=loop4_num+1;
     end
 end
 for i=1:size(loopc,1)
-    temp = verifystructure( linktable1,loopc(i,:),path_points );
+    temp = verify_structure( linktable1,loopc(i,:),path_points );
     if(~isempty(temp))
         loop5(loop5_num,:)=temp;
         loop5_num=loop5_num+1;

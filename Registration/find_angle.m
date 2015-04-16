@@ -1,4 +1,4 @@
-function outdegs = findangle(boundvec)
+function outdegs = find_angle(boundvec)
 
 %计算分叉点角度
 

@@ -1,4 +1,4 @@
-function [outmosaicbw_twice,sae_twice,mytform_twice,flag]=cycle_twice_registration(bw1,bw2,mytform,outbw2,points_bb,points_aa,ptbifu1,ptbifu2)
+function [outmosaicbw_twice,sae_twice,mytform_twice,flag]=local_registration(bw1,bw2,mytform,outbw2,points_bb,points_aa,ptbifu1,ptbifu2)
 
 %%基于环-血管-分叉点特征点的二次配准%%
 

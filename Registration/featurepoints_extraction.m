@@ -60,9 +60,14 @@ for i=1:M-1
         end
     end
 end
-for i=1:M
-    seq1(i)=find(A==cycle1(i)); %给出环的正确连接顺序
-    seq2(i)=find(B==cycle2(i)); 
+if isempty(find(cycle1==0, 1)) && isempty(find(cycle2==0, 1))
+    for i=1:M
+        seq1(i)=find(A==cycle1(i)); %给出环的正确连接顺序
+        seq2(i)=find(B==cycle2(i));
+    end
+else
+    seq1=1:1:M;
+    seq2=1:1:M;
 end
 
 cyclebifu1=cyclebifu1(:,seq1);A=A(seq1);%将环分叉点按逐次相连的顺序重新排序
@@ -96,9 +101,9 @@ externalorder=intersect(order1,order2);%两幅图像都有外接分叉点的序�
 n=1;bifuorder=0;R=3;
 for i=1:numel(externalorder)
     anglevec1=point_anglevec(bw1, externalbifu1(externalorder(i)), R);
-    outangle1=findangle(anglevec1);%每个外接分叉点的角度
+    outangle1=find_angle(anglevec1);%每个外接分叉点的角度
     anglevec2=point_anglevec(bw2, externalbifu2(externalorder(i)), R);
-    outangle2=findangle(anglevec2);
+    outangle2=find_angle(anglevec2);
     if numel(outangle1)==numel(outangle2)
         diffangle=outangle1-outangle2;
     else diffangle=100;

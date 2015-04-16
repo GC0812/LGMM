@@ -1,4 +1,4 @@
-function [points_bb,points_aa,outbw2,mytform]= cycle_vessel_registration(bw1,bw2,matchingpair1,matchingpair2,linktableoriginal1,linktableoriginal2)
+function [points_bb,points_aa,outbw2,mytform]= global_registration(bw1,bw2,matchingpair1,matchingpair2,linktableoriginal1,linktableoriginal2)
 
 %%基于环-血管特征点的初次配准%%
 

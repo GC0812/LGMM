@@ -6,7 +6,7 @@ idx = numel(seeds);
 n=1;
 for count = 1:idx
     anglevec = point_anglevec(bw, seeds(1,count), R);
-    angel=findangle(anglevec);%每个分叉点的分支间角度
+    angel=find_angle(anglevec);%每个分叉点的分支间角度
     NeighborNum = numel(find(angel~=0));
     switch NeighborNum
         case 0 
