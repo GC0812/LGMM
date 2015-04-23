@@ -184,7 +184,7 @@
 \pagestyle{fancy}
 \fancyhf{}
 %\lhead{\color{black!50!green}2014年秋季学期}
-\chead{\color{black!50!green}分叉点角度求解}
+\chead{\color{black!50!green}分叉点（或交叉点）角度求解}
 %\rhead{\color{black!50!green}通信电子电路}
 \lfoot{\color{blue!50!green}邱欣欣}
 \cfoot{\color{blue!50!green}\href{http://vision.ouc.edu.cn/~zhenghaiyong}{CVBIOUC}}
@@ -197,7 +197,7 @@
 %%---------------------------------------------------------------------
 %%---------------------------------------------------------------------
 % \titlepage
-\title{\vspace{-2em}分叉点角度求解\vspace{-0.7em}}
+\title{\vspace{-2em}分叉点（或交叉点）（或交叉点）角度求解\vspace{-0.7em}}
 \author{邱欣欣}
 \date{\vspace{-0.7em}2015年3月27日\vspace{-0.7em}}
 %%---------------------------------------------------------------------
@@ -208,15 +208,15 @@
 
 \section{简介}
 \begin{enumerate}
-\item 求解分叉点角度主要应用在环结构描述时求环结构特征向量，全局配准求取环-血管特征点时判断环外分叉点是否为对应分叉点，局部配准时判断局部分叉点是否为对应分叉点，涉及 \verb|Registration/points_featuremat.m| 与 \verb|Registration/findangle.m| 两个程序。输入为图像的二值图 \verb|bw|，分叉点序号，半径 \verb|R|，输出为该分叉点的分支角度。
+\item 求解分叉点（或交叉点）角度主要应用在环结构描述时求环结构特征向量，全局配准求取环-血管特征点时判断环外分叉点（或交叉点）是否为对应分叉点（或交叉点），局部配准时判断局部分叉点（或交叉点）是否为对应分叉点（或交叉点），涉及 \verb|Registration/points_featuremat.m| 与 \verb|Registration/findangle.m| 两个程序。输入为图像的二值图 \verb|bw|，分叉点（或交叉点）序号，半径 \verb|R|，输出为该分叉点（或交叉点）的分支角度。
 \end{enumerate}
 
 \section{过程}
 \begin{enumerate}
-\item 以分叉点为中心，取 \verb|bw|一个$7\times7$（由\verb|R|决定）的区域，以3点钟方向为起点，沿逆时针绕一圈求得连通区域最外围像素的值，见例图\ref{fig:bifu}红色圈。
-\item 以分叉点为起点，$7\times7$区域的最外围点为终点，可以划分24个方向的角度（见蓝线），注意每个角度并不是均为$15^\circ$。
-\item 根据最外围值为1的像素的位置，求得与3点钟方向对应的夹角；若遇到图中\ref{fig:bifu}两个或多个值为1的像素相邻的情况，取这两个像素和分叉点中心连线与3点钟方向夹角的平均值作为此方向的角度值。
-\item 夹角两两相减（若为负值则加上$360^\circ$），得到的角度则为最终的分叉点的角度（见图紫色处角度）。
+\item 以分叉点（或交叉点）为中心，取 \verb|bw|一个$7\times7$（由\verb|R|决定）的区域，以3点钟方向为起点，沿逆时针绕一圈求得连通区域最外围像素的值，见例图\ref{fig:bifu}红色圈。
+\item 以分叉点（或交叉点）为起点，$7\times7$区域的最外围点为终点，可以划分24个方向的角度（见蓝线），注意每个角度并不是均为$15^\circ$。
+\item 根据最外围值为1的像素的位置，求得与3点钟方向对应的夹角；若遇到图中\ref{fig:bifu}两个或多个值为1的像素相邻的情况，取这两个像素和分叉点（或交叉点）中心连线与3点钟方向夹角的平均值作为此方向的角度值。
+\item 夹角两两相减（若为负值则加上$360^\circ$），得到的角度则为最终的分叉点（或交叉点）的角度（见图紫色处角度）。
 \begin{figure}
 \centering
 \includegraphics[width=0.7\textwidth]{images/分叉点图}

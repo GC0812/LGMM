@@ -20,7 +20,7 @@
           <y:Geometry height="60.200000000000045" width="299.1347867249433" x="792.7892007254081" y="362.7999999999999"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.265625" modelName="custom" textColor="#000000" visible="true" width="196.0" x="51.56739336247165" y="13.967187500000023">提取对应分叉点作为特征点（由得到
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.265625" modelName="custom" textColor="#000000" visible="true" width="268.0" x="15.567393362471648" y="13.967187500000023">提取对应分叉点（或交叉点）作为特征点（由得到
 的序号信息推出坐标）<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
@@ -55,8 +55,9 @@
           <y:Geometry height="52.2000000000001" width="401.0000000000002" x="1148.3217266202716" y="342.80049460225723"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.265625" modelName="custom" textColor="#000000" visible="true" width="410.18359375" x="-4.591796875" y="9.967187500000023">计算两幅图像中相对应的血管的长度（即从环上的分叉点到血管末梢处(这
-个末梢有可能就是分叉点)的像素个数，设参考图像为d1，待配准图像为d2）<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="46.3984375" modelName="custom" textColor="#000000" visible="true" width="388.0" x="6.500000000000227" y="2.9007812500000227">计算两幅图像中相对应的血管的长度（即从环上的分叉点（或交叉点）到
+血管末梢处(这个末梢有可能就是分叉点（或交叉点）)的像素个数，设
+参考图像为d1，待配准图像为d2）<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -88,7 +89,7 @@
           <y:Geometry height="52.200000000000045" width="401.0000000000002" x="1148.3217266202714" y="439.17102489310173"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.265625" modelName="custom" textColor="#000000" visible="true" width="347.587890625" x="26.706054687500227" y="9.967187500000023">由缩放比例和血管长度选取血管上的2对对应点，即将血管长度的
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.265625" modelName="custom" textColor="#000000" visible="true" width="347.587890625" x="26.7060546875" y="9.967187500000023">由缩放比例和血管长度选取血管上的2对对应点，即将血管长度的
 1/2处的点和末梢处的点作为特征点。<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
@@ -156,8 +157,9 @@
           <y:Geometry height="74.0" width="401.0" x="741.8565940878796" y="904.316889632107"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.265625" modelName="custom" textColor="#000000" visible="true" width="376.123046875" x="12.4384765625" y="20.8671875">以一个分叉点为中心，划一个11X11的区域，找这个区域内变换图像S’
-是否有分叉点(这一步是为了找T与S‘可能对应的分叉点)<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="46.3984375" modelName="custom" textColor="#000000" visible="true" width="389.86328125" x="5.568359375" y="13.80078125">以一个分叉点（或交叉点）为中心，划一个11X11的区域，找这个区域内
+变换图像S’是否有分叉点（或交叉点）(这一步是为了找T与S‘可能对应的
+分叉点（或交叉点）)<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -170,13 +172,14 @@
     <node id="n9">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.process">
-          <y:Geometry height="92.40000000000003" width="495.0" x="694.8565940878796" y="1161.191889632107"/>
+          <y:Geometry height="92.40000000000003" width="521.1514967192481" x="681.7808457282556" y="1161.191889632107"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="60.53125" modelName="custom" textColor="#000000" visible="true" width="475.17578125" x="9.912109375" y="15.934375000000045">分别计算参考图像上的该分叉点及其变换图像区域内存在的分叉点的角度（根据之前的求
-分叉点角度的程序），找到与参考图像上的分叉点最相似的分叉点（通过角度向量相减求
-均值的方式找到最相似的分叉点，若这个值大于阈值12，则认为不是相对应的）。这一步
-就确定了参考图像上该分叉点在变换图像上相对应的分叉点。<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="74.6640625" modelName="custom" textColor="#000000" visible="true" width="499.17578125" x="10.987857734624072" y="8.867968750000045">分别计算参考图像上的该分叉点（或交叉点）及其变换图像区域内存在的分叉点（或交叉点）
+的角度（根据之前的求分叉点角度的程序），找到与参考图像上的分叉点（或交叉点）最相似
+的分叉点（或交叉点）（通过角度向量相减求均值的方式找到最相似的分叉点（或交叉点），
+若这个值大于阈值12，则认为不是相对应的）。这一步就确定了参考图像上该分叉点（或交叉
+点）在变换图像上相对应的分叉点（或交叉点）。<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -192,7 +195,7 @@
           <y:Geometry height="85.15000000000009" width="227.58430964135277" x="828.5644392672032" y="1020.5418896321071"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="custom" textColor="#000000" visible="true" width="136.0" x="45.79215482067639" y="33.508593750000045">小区域内是否有分叉点？<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="custom" textColor="#000000" visible="true" width="208.0" x="9.792154820676387" y="33.508593750000045">小区域内是否有分叉点（或交叉点）？<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -208,7 +211,7 @@
           <y:Geometry height="40.0" width="259.0" x="443.35659408787956" y="990.316889632107"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="custom" textColor="#000000" visible="true" width="184.0" x="37.5" y="10.93359375">参考图像上的下一个分叉点为对象<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="custom" textColor="#000000" visible="true" width="256.0" x="1.5" y="10.93359375">参考图像上的下一个分叉点（或交叉点）为对象<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -256,11 +259,16 @@
           <y:Geometry height="325.0" width="41.25" x="1272.2315940878796" y="1044.816889632107"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="117.0625" modelName="custom" textColor="#000000" visible="true" width="16.0" x="12.625" y="103.96875">所
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="187.7265625" modelName="custom" textColor="#000000" visible="true" width="16.0" x="12.625" y="68.63671875">所
 有
 分
 叉
 点
+（
+交
+叉
+点
+）
 都
 找
 完<y:LabelModel>
@@ -297,7 +305,7 @@
           <y:Geometry height="40.0" width="401.00000000000006" x="1182.7595587764806" y="1559.2918896321069"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.265625" modelName="custom" textColor="#000000" visible="true" width="196.0" x="102.5" y="3.8671875">统计在每个区域内的分叉点对应点，
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.265625" modelName="custom" textColor="#000000" visible="true" width="196.0" x="102.5" y="3.8671875">统计在每个区域内的对应点，
 根据之前计算的距离按从大到小排序<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
@@ -311,12 +319,13 @@
     <node id="n17">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.process">
-          <y:Geometry height="55.200000000000045" width="401.0" x="1182.7595587764806" y="1635.0918896321068"/>
+          <y:Geometry height="68.40000000000009" width="401.0" x="1182.7595587764806" y="1635.0918896321068"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="46.3984375" modelName="custom" textColor="#000000" visible="true" width="388.0" x="6.5" y="4.400781249999909">设定一个距离阈值，统计在每个区域内分叉点距离超过这个阈值的数目，
-若数目较多，则选3对或2对距离较大的分叉点，若数目较少则选1对或
-2对距离较大的分叉点（确定了未配准的分叉点）<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="60.53125" modelName="custom" textColor="#000000" visible="true" width="403.17578125" x="-1.087890625" y="3.9343750000000455">设定一个距离阈值，统计在每个区域内分叉点（或交叉点）距离超过这个
+阈值的数目，若数目较多，则选3对或2对距离较大的分叉点（或交叉点），
+若数目较少则选1对或2对距离较大的分叉点（或交叉点）（确定了未配准
+的分叉点（或交叉点））<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -415,8 +424,8 @@
           <y:Geometry height="69.67235771136012" width="150.86219232293968" x="1160.08418858294" y="128.50113729698612"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.265625" modelName="custom" textColor="#000000" visible="true" width="112.0" x="19.431096161469895" y="18.70336635568006">两幅图像均没有与环
-相连的分叉点<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.265625" modelName="custom" textColor="#000000" visible="true" width="148.0" x="1.4310961614698954" y="18.70336635568006">两幅图像均没有与环
+相连的分叉点（或交叉点）<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -429,12 +438,12 @@
     <node id="n24">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.start1">
-          <y:Geometry height="69.67235771136012" width="150.86219232293968" x="1387.7196407980489" y="128.50113729698612"/>
+          <y:Geometry height="69.67235771136012" width="183.43017817219322" x="1371.435647873422" y="128.50113729698612"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="46.3984375" modelName="custom" textColor="#000000" visible="true" width="124.0" x="13.431096161469895" y="11.63696010568006">两幅图像一个存在与环
-相连的分叉点，另一个
-没有与环相连的分叉点<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="46.3984375" modelName="custom" textColor="#000000" visible="true" width="196.0" x="-6.284910913903332" y="11.63696010568006">两幅图像一个存在与环相连的
+分叉点（或交叉点），另一个
+没有与环相连的分叉点（或交叉点）<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -450,8 +459,8 @@
           <y:Geometry height="69.67235771136012" width="150.8621923229398" x="866.9254979264099" y="128.50113729698612"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.265625" modelName="custom" textColor="#000000" visible="true" width="112.0" x="19.431096161469895" y="18.70336635568006">两幅图像上均有与环
-相连的分叉点<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.265625" modelName="custom" textColor="#000000" visible="true" width="148.0" x="1.4310961614698954" y="18.70336635568006">两幅图像上均有与环
+相连的分叉点（或交叉点）<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -483,9 +492,10 @@
           <y:Geometry height="60.2000000000001" width="299.1347867249432" x="792.7892007254081" y="452.9999999999999"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="46.3984375" modelName="custom" textColor="#000000" visible="true" width="280.0" x="9.567393362471648" y="6.900781250000023">计算两幅图像中从环上的分叉点到血管分叉点的血管
-长度（像素个数），并分别取血管长度1/2处的对应
-点作为特征点，与对应分叉点合并形成2对特征点<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="60.53125" modelName="custom" textColor="#000000" visible="true" width="292.0" x="3.5673933624716483" y="-0.16562499999997726">计算两幅图像中从环上的分叉点（或交叉点）到血管分
+叉点（或交叉点）的血管长度（像素个数），并分别取
+血管长度1/2处的对应点作为特征点，与对应分叉点
+（或交叉点）合并形成2对特征点<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -530,10 +540,10 @@
     <node id="n30">
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.process">
-          <y:Geometry height="40.0" width="199.13648564865957" x="423.01137788807625" y="-37.87266367777791"/>
+          <y:Geometry height="40.0" width="271.4595143920357" x="386.84986351638815" y="-37.87266367777791"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="custom" textColor="#000000" visible="true" width="196.0" x="1.5682428243297863" y="10.93359375">将所有匹配的环的分叉点作为特征点<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="custom" textColor="#000000" visible="true" width="268.0" x="1.7297571960178857" y="10.93359375">将所有匹配的环的分叉点（或交叉点）作为特征点<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -549,9 +559,9 @@
           <y:Geometry height="60.200000000000045" width="299.13478672494307" x="792.7892007254081" y="552.2999999999998"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="46.3984375" modelName="custom" textColor="#000000" visible="true" width="256.0" x="21.567393362471535" y="6.900781250000023">对于这对环与之相连的血管上的点及分叉点特征
-点提取结束，将两部分得到的特征点加入初始
-特征点集<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="46.3984375" modelName="custom" textColor="#000000" visible="true" width="232.0" x="33.567393362471535" y="6.900781250000023">对于这对环与之相连的血管上的点及分叉点
+（或交叉点）特征点提取结束，将两部分得
+到的特征点加入初始特征点集<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -620,7 +630,6 @@
       </data>
     </node>
     <node id="n35">
-      <data key="d5"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.document">
           <y:Geometry height="40.0" width="192.1116873360329" x="1263.7501002343074" y="-111.47266367777796"/>
@@ -637,13 +646,13 @@
       </data>
     </node>
     <node id="n36">
-      <data key="d5"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.process">
           <y:Geometry height="40.0" width="401.0000000000001" x="741.8565940878796" y="827.316889632107"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" modelName="custom" textColor="#000000" visible="true" width="392.306640625" x="4.3466796875" y="10.93359375">找参考图像T上所有的分叉点（记分叉点集为bifu1,bifu2,bifu3...bifun）<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.265625" modelName="custom" textColor="#000000" visible="true" width="299.587890625" x="50.7060546875" y="3.8671875">找参考图像T上所有的分叉点（或交叉点）（记分叉点集
+为bifu1,bifu2,bifu3...bifun）<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -654,14 +663,13 @@
       </data>
     </node>
     <node id="n37">
-      <data key="d5"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.process">
           <y:Geometry height="68.40000000000009" width="401.00000000000034" x="741.8565940878796" y="1460.8918896321068"/>
           <y:Fill color="#E8EEF7" color2="#B7C9E3" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.265625" modelName="custom" textColor="#000000" visible="true" width="364.71484375" x="18.142578125000227" y="18.067187500000045">设立阈值3，若对应分叉点之间的距离&gt;3个像素则认为这两个分叉点
-没有对齐，需要再一次配准。由此确定了未配准的分叉点。<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="32.265625" modelName="custom" textColor="#000000" visible="true" width="388.0" x="6.500000000000227" y="18.067187500000045">设立阈值3，若对应分叉点之间的距离&gt;3个像素则认为这两个分叉点
+（或交叉点）没有对齐，需要再一次配准。由此确定了未配准的分叉点。<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -672,10 +680,9 @@
       </data>
     </node>
     <node id="n38">
-      <data key="d5"/>
       <data key="d6">
         <y:ShapeNode>
-          <y:Geometry height="286.74202120687573" width="444.90377266765154" x="1161.9013487304996" y="1422.1918896321065"/>
+          <y:Geometry height="286.74202120687573" width="444.90377266765154" x="1160.8076724426548" y="1429.0140192110405"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle color="#000000" type="dashed" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" textColor="#000000" visible="true" width="4.0" x="220.45188633382577" y="141.37101060343798">
@@ -691,7 +698,6 @@
       </data>
     </node>
     <node id="n39">
-      <data key="d5"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.process">
           <y:Geometry height="24.833804654446112" width="159.08087573038802" x="1291.8132011886566" y="1410.3576809881351"/>
@@ -708,13 +714,12 @@
       </data>
     </node>
     <node id="n40">
-      <data key="d5"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.process">
-          <y:Geometry height="761.8386784705267" width="1593.730735441945" x="404.66599335079127" y="-126.93234442996166"/>
+          <y:Geometry height="761.8386784705267" width="1614.1971241787478" x="378.9653459141664" y="-126.93234442996166"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle color="#000000" type="dashed" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" textColor="#000000" visible="true" width="4.0" x="794.8653677209726" y="378.91933923526335">
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" textColor="#000000" visible="true" width="4.0" x="805.0985620893739" y="378.91933923526335">
             <y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
@@ -726,13 +731,12 @@
       </data>
     </node>
     <node id="n41">
-      <data key="d5"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.process">
-          <y:Geometry height="829.7254576363403" width="1216.0202513598188" x="418.66478138221555" y="888.3239069110764"/>
+          <y:Geometry height="829.7254576363403" width="1216.0202513598188" x="420.9388245751934" y="886.030582781576"/>
           <y:Fill hasColor="false" transparent="false"/>
           <y:BorderStyle color="#000000" type="dashed" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" textColor="#000000" visible="true" width="4.0" x="606.0101256799094" y="412.86272881817">
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" hasText="false" height="4.0" modelName="custom" textColor="#000000" visible="true" width="4.0" x="606.0101256799094" y="412.8627288181701">
             <y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
@@ -744,7 +748,6 @@
       </data>
     </node>
     <node id="n42">
-      <data key="d5"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.document">
           <y:Geometry height="40.0" width="182.91346841625796" x="1285.8550530171892" y="904.316889632107"/>
@@ -761,7 +764,6 @@
       </data>
     </node>
     <node id="n43">
-      <data key="d5"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.document">
           <y:Geometry height="46.49979800523738" width="218.30125755588392" x="1188.890845002842" y="1730.475795283934"/>
@@ -1024,8 +1026,8 @@
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
-            <y:Point x="659.5087333440856" y="582.3999999999999"/>
-            <y:Point x="659.5087333440856" y="-21.47266367777796"/>
+            <y:Point x="677.3113250347628" y="582.3999999999999"/>
+            <y:Point x="677.3113250347628" y="-21.47266367777796"/>
           </y:Path>
           <y:LineStyle color="#000000" type="line" width="1.0"/>
           <y:Arrows source="none" target="standard"/>
@@ -1093,7 +1095,6 @@
       </data>
     </edge>
     <edge id="e29" source="n7" target="n36">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -1104,7 +1105,6 @@
       </data>
     </edge>
     <edge id="e30" source="n36" target="n8">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -1115,7 +1115,6 @@
       </data>
     </edge>
     <edge id="e31" source="n8" target="n13">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -1129,7 +1128,6 @@
       </data>
     </edge>
     <edge id="e32" source="n13" target="n37">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -1140,7 +1138,6 @@
       </data>
     </edge>
     <edge id="e33" source="n37" target="n18">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -1151,7 +1148,6 @@
       </data>
     </edge>
     <edge id="e34" source="n13" target="n15">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0">
@@ -1165,7 +1161,6 @@
       </data>
     </edge>
     <edge id="e35" source="n15" target="n16">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -1176,7 +1171,6 @@
       </data>
     </edge>
     <edge id="e36" source="n16" target="n17">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -1187,7 +1181,6 @@
       </data>
     </edge>
     <edge id="e37" source="n43" target="n18">
-      <data key="d9"/>
       <data key="d10">
         <y:GenericEdge configuration="com.yworks.edge.framed">
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
