@@ -6,6 +6,11 @@ num1=find(bw1==1);
 num2=find(outbw2==1);
 m2=numel(num2);
 
+if m2/bw2_num<=0.38
+    error=13;
+    return;
+end
+
 [M1,~]=size(bw1);
 [M2,N2]=size(outbw2);
 
@@ -54,9 +59,11 @@ for i=1:m2
 end
 
 effective_rate=(m2-k2)/m2;
-if effective_rate>0.5 && m2/bw2_num>0.38 %%正确的误差需要满足一定条件
+if effective_rate>0.5 %%正确的误差需要满足一定条件
     error=sum(error_all)/(m2-k2);
 else
     error=13;
 end
+
+
 
