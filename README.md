@@ -8,7 +8,7 @@ Installation
 
 1. In `Dataset/Image/`, there is only one pair of example images. The `index.txt` presents one pair of retinal images from same eye in every row.
 2. Run `./preconditioning.m` first to preprocess retinal images and obtain skeleton images, the results are saved in `Dataset/Skeleton/`. 
-3. The file sdfs.cpp is known as Space-based Depth-First Search algorithm for finding the cycle structures, which should be compiled prior to use such as `g++ sdfs.cpp -o sdfs` in Linux and Mac OS X systems.  
+3. The file `sdfs.cpp` is known as Space-based Depth-First Search algorithm for finding the cycle structures, which should be compiled prior to use such as `g++ sdfs.cpp -o sdfs` in Linux and Mac OS X systems.  
 4. Run `./registration.m` to save optimal registration result of retinal images in `Results/`.
 
 Notes
