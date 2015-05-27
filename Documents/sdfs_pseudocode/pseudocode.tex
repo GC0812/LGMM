@@ -66,7 +66,7 @@
     % Define standard arrow tip
     >=stealth',
     % Define style for boxes
-    punkt/.style={ 
+    punkt/.style={
            rectangle,
            rounded corners,
            draw=black, very thick,
@@ -211,7 +211,7 @@
 %\maketitle
 %\tableofcontents 
 
-\section{Pseudocode}
+%\section{Pseudocode}
 \begin{algorithm}[!ht]
 \caption{Space-based Depth-First Search (SDFS)}\label{alg:sdfs}
 \textbf{Input}: The feature points $P$, their number $n$ and connectivity matrix $M$ in the binary skeleton image.\\
@@ -226,22 +226,24 @@
 \STATE $p_1\leftarrow CyclePath(end)$
 \STATE calculate vector $V_{p_1p_0}=V_{p_0}-V_{p_1}$
 \FOR {each point $p_{2_k}\in P$ \AND connects to $p_1$}
-\IF {$V_{p_1p_0}\times V_{p_1p_{2_k}}>=0$}
+\IF {$V_{p_1p_0}.x\times V_{p_1p_{2_k}}.y-V_{p_1p_0}.y\times V_{p_1p_{2_k}}.x>0$}
 \STATE add $p_{2_k}$ to $RightHandPoints$
-\ELSE
+\ELSIF {$V_{p_1p_0}.x\times V_{p_1p_{2_k}}.y-V_{p_1p_0}.y\times V_{p_1p_{2_k}}.x<0$}
 \STATE add $p_{2_k}$ to $LeftHandPoints$
+\ELSE
+\STATE add $p_{2_k}$ to $CyclePath$
 \ENDIF
 \ENDFOR
 \IF {$RightHandPoints$ is not empty}
 \FOR {each point $p_{2_m}$ in $RightHandPoints$}
 \STATE calculate $\theta_{p_0p_1p_{2_m}}=\arccos{\frac{V_{p_1p_0}\cdot V_{p_1p_{2_m}}}{\left|V_{p_1p_0}\right|\left|V_{p_1p_{2_m}}\right|}}$
 \ENDFOR
-\STATE add $p_2$ determined by $\min{\left(\theta_{p_0p_1p_{2_m}}\right)}$ to $CyclePath$
-\ELSE
+\STATE add $p_{2_m}$ determined by $\min{\left(\theta_{p_0p_1p_{2_m}}\right)}$ to $CyclePath$
+\ELSIF {$LeftHandPoints$ is not empty}
 \FOR {each point $p_{2_n}$ in $LeftHandPoints$}
 \STATE calculate $\theta_{p_0p_1p_{2_n}}=\arccos{\frac{V_{p_1p_0}\cdot V_{p_1p_{2_n}}}{\left|V_{p_1p_0}\right|\left|V_{p_1p_{2_n}}\right|}}$
 \ENDFOR
-\STATE \textcolor{red}{add $p_2$ determined by $\min{\left(\theta_{p_0p_1p_{2_n}}\right)}$ to $CyclePath$}
+\STATE \textcolor{red}{add $p_{2_n}$ determined by $\min{\left(\theta_{p_0p_1p_{2_n}}\right)}$ to $CyclePath$}
 \ENDIF
 \IF  {$CyclePath$'s point number is greater than $2$ \AND last point is the same as first point}
 \IF {\textcolor{red}{$checkCyclePath(p_0,p_1,p_2,...)$}}
