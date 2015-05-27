@@ -1,2 +1,1 @@
-R067--R118 0.58441 10--11 four_five	0.58648 4--6 three_four_five	0.58817 9--11 three
-
+R067-R118 0.56447 10-11 four_five	0.57170 9-11 three	0.58960 9-11 three_four_five
