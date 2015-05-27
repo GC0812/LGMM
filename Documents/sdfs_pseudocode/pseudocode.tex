@@ -231,7 +231,7 @@
 \ELSIF {$V_{p_1p_0}.x\times V_{p_1p_{2_k}}.y-V_{p_1p_0}.y\times V_{p_1p_{2_k}}.x<0$}
 \STATE add $p_{2_k}$ to $LeftHandPoints$
 \ELSE
-\STATE add $p_{2_k}$ to $CyclePath$
+\STATE record $p_{2_k}$ to $LinePoint$
 \ENDIF
 \ENDFOR
 \IF {$RightHandPoints$ is not empty}
@@ -244,6 +244,8 @@
 \STATE calculate $\theta_{p_0p_1p_{2_n}}=\arccos{\frac{V_{p_1p_0}\cdot V_{p_1p_{2_n}}}{\left|V_{p_1p_0}\right|\left|V_{p_1p_{2_n}}\right|}}$
 \ENDFOR
 \STATE \textcolor{red}{add $p_{2_n}$ determined by $\min{\left(\theta_{p_0p_1p_{2_n}}\right)}$ to $CyclePath$}
+\ELSE
+\STATE add $LinePoint$ to $CyclePath$
 \ENDIF
 \IF  {$CyclePath$'s point number is greater than $2$ \AND last point is the same as first point}
 \IF {\textcolor{red}{$checkCyclePath(p_0,p_1,p_2,...)$}}
