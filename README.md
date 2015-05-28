@@ -1,7 +1,7 @@
 GLMM
 ==================
 
-Registering Retinal Vessel Images from Global to Local via Multiscale and Multicycle Features.
+Registering retinal vessel images from Local to Global via Multiscale and Multicycle features.
 
 Installation
 ==================
