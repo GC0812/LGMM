@@ -1,4 +1,4 @@
-GLMM
+LGMM
 ==================
 
 Registering retinal vessel images from Local to Global via Multiscale and Multicycle features.
