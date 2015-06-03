@@ -216,14 +216,6 @@ public:
 		return jiaodu / pi * 180 + 1e-6;
 	}
 
-	double D(Node p0, Node p1, Node p2) {
-		double x1 = p1.x - p0.x; double y1 = p1.y - p0.y;
-		double x2 = p2.x - p0.x; double y2 = p2.y - p0.y;
-		double ans = x1 * y2 - x2 * y1;
-		return ans;
-	}
-
-
 	void Add(int u, int v) {
 		e[e_tot].to = v;
 		e[e_tot].next = head[u];
@@ -244,13 +236,12 @@ public:
 					double ang1 = 181;
 					int id_num1 = n + 1;
 					int now = point[cnt - 1].id;
-				//	printf("now = %d  point[cnt - 1].id = %d   point[0].id = %d\n", now, point[cnt - 1].id ,point[0].id);
 					for(int k = head[now]; k; k = e[k].next) {
 						int ne = e[k].to;
 						if(vis[ne] && ne != point[0].id) {
                             continue;
 						}
-						double a1 = D(point[cnt - 1], point[cnt - 2], init[ne]);
+						double a1 = cross(point[cnt - 1], point[cnt - 2], init[ne]);
 
 						if(eps(a1) > 0) {
 							double a2 = C(point[cnt - 1], point[cnt - 2], init[ne]);
@@ -269,7 +260,7 @@ public:
 						for(int k = head[now]; k; k = e[k].next) {
 							int ne = e[k].to;
 							if(vis[ne] && ne != point[0].id) continue;
-							double a1 = D(point[cnt - 1], point[cnt - 2], init[ne]);
+							double a1 = cross(point[cnt - 1], point[cnt - 2], init[ne]);
 							if(eps(a1) < 0) {
 								double a2 = C(point[cnt - 1], point[cnt - 2], init[ne]);
 								if(ang2 < a2) {
@@ -282,12 +273,11 @@ public:
 							point[cnt++] = init[id_num2];
 							vis[id_num2] = 1;
 						} else {
-							double ang2 = -1;
 							int id_num2 = n + 1;
 							for(int k = head[now]; k; k = e[k].next) {
 								int ne = e[k].to;
 								if(vis[ne] && ne != point[0].id) continue;
-								double a1 = D(point[cnt - 1], point[cnt - 2], init[ne]);
+								double a1 = cross(point[cnt - 1], point[cnt - 2], init[ne]);
 								if(eps(a1) == 0) {
 									id_num2 = ne;
 								}
@@ -333,7 +323,6 @@ public:
 				v = id_map[v];
 				mat[u][v] = mat[v][u] = 1;
 				Add(u, v);
-				Add(v, u);
 			}
 		}
 	}
