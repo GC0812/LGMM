@@ -189,7 +189,7 @@
 %\lhead{\color{black!50!green}2014年秋季学期}
 \chead{\color{black!50!green}}
 %\rhead{\color{black!50!green}通信电子电路}
-\lfoot{\color{blue!50!green}邱欣欣}
+\lfoot{\color{blue!50!green}郑海永\;邱欣欣}
 \cfoot{\color{blue!50!green}\href{http://vision.ouc.edu.cn/~zhenghaiyong}{CVBIOUC}}
 \rfoot{\color{blue!50!green}$\cdot$\ \thepage\ $\cdot$}
 \renewcommand{\headrulewidth}{0.4pt}
@@ -203,7 +203,7 @@
 %%---------------------------------------------------------------------
 % \titlepage
 \title{\vspace{-2em}Pseudocode\vspace{-0.7em}}
-\author{邱欣欣}
+\author{郑海永\;邱欣欣}
 %\date{\vspace{-0.7em}2014年11月\vspace{-0.7em}}
 %%---------------------------------------------------------------------
 \maketitle\thispagestyle{fancy}
@@ -243,7 +243,7 @@
 \FOR {each point $p_{2_n}$ in $LeftHandPoints$}
 \STATE calculate $\theta_{p_0p_1p_{2_n}}=\arccos{\frac{V_{p_1p_0}\cdot V_{p_1p_{2_n}}}{\left|V_{p_1p_0}\right|\left|V_{p_1p_{2_n}}\right|}}$
 \ENDFOR
-\STATE \textcolor{red}{add $p_{2_n}$ determined by $\min{\left(\theta_{p_0p_1p_{2_n}}\right)}$ to $CyclePath$}
+\STATE add $p_{2_n}$ determined by $\min{\left(\theta_{p_0p_1p_{2_n}}\right)}$ to $CyclePath$
 \ELSE
 \STATE add $LinePoint$ to $CyclePath$
 \ENDIF
