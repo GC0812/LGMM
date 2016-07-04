@@ -1,7 +1,7 @@
 LGMM
 ==================
 
-Registering retinal vessel images from Local to Global via Multiscale and Multicycle features.
+Registering Retinal Vessel Images from Local to Global via Multiscale and Multicycle Features.
 
 Copyright
 ==================
@@ -11,7 +11,7 @@ results obtained using this software, please use this citation.
 
     @InProceedings{zheng2016registering,
     author = {Zheng, Haiyong and Chang, Lin and Wei, Tengda and Qiu, Xinxin and Lin, Ping and Wang, Yangfan},
-    title = {Registering Retinal Vessel Images from Local to Global via Multiscale and Multicycle Features},
+    title = {Registering retinal vessel images from Local to Global via Multiscale and Multicycle features},
     booktitle = {The IEEE Conference on Computer Vision and Pattern Recognition (CVPR) Workshops},
     month = {June},
     year = {2016}
